@@ -1,0 +1,40 @@
+.
+|-- Feature importances by RandomTreeClassifier.png
+|-- Learning Curve.png
+|-- README.md
+|-- corr.png
+|-- data
+|   |-- ClassDefine.txt
+|   |-- img.tif
+|   |-- img.tif.aux.xml
+|   |-- img.tif.ovr
+|   |-- model.pickle
+|   |-- result00.tif
+|   |-- result00.tif.vat.dbf
+|   |-- result01.tif
+|   |-- result01.tif.aux.xml
+|   |-- result01.tif.ovr
+|   |-- result01.tif.vat.dbf
+|   |-- result02.tif
+|   |-- result02.tif.vat.dbf
+|   |-- sample.dbf
+|   |-- sample.prj
+|   |-- sample.sbn
+|   |-- sample.sbx
+|   |-- sample.shp
+|   |-- sample.shx
+|   |-- sample.tfw
+|   |-- sample.tif
+|   |-- sample.tif.aux.xml
+|   |-- sample.tif.ovr
+|   |-- sample.tif.vat.dbf
+|   |-- sample.tif.xml
+|   `-- sample.txt
+|-- get_sample.py
+|-- predict.py
+|-- predict_result.png
+|-- train.py
+|-- tree.txt
+`-- utils.py
+
+1 directory, 36 files

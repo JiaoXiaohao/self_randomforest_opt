@@ -1,0 +1,179 @@
+******************** 欢迎使用遥感影像机器学习地物分类工具箱 ********************
+******************** 当前页面为:随机森林 ********************
+******************** 当前页面为:LightGBM ********************
+选择的遥感影像数据路径:E:/self_randomforest_opt/data/img.tif
+选择的标签数据路径:E:/self_randomforest_opt/data/label.tif
+选择的NumClass数据路径:E:/self_randomforest_opt/data/ClassDefine.txt
+选择的输出样本数据路径:E:/self_randomforest_opt/data/sample.csv
+********** 开始获取样本数据 **********
+********** 读取影像数据 **********
+Dataset Name:E:/self_randomforest_opt/data/img.tif
+Driver: GTiff/GeoTIFF
+Size is：W2048*H2048*B16
+Projection is：PROJCS["WGS 84 / UTM zone 50N",GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",117],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",0],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["EPSG","32650"]]
+Origin = (208020.0, 3592320.0)
+Pixel Size = (10.0, 10.0)
+原始影像数据形状：(16, 2048, 2048)
+********** 读取完毕 **********
+********** 读取标签数据 **********
+Dataset Name:E:/self_randomforest_opt/data/label.tif
+Driver: GTiff/GeoTIFF
+Size is：W2041*H2038*B1
+Projection is：PROJCS["WGS 84 / UTM zone 50N",GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",117],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",0],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["EPSG","32650"]]
+Origin = (208040.9539984446, 3592236.6685693115)
+Pixel Size = (10.0, 10.0)
+原始标签数据形状：(2038, 2041)
+********** 读取完毕 **********
+********** 调整数据 **********
+Warning: _img_ and _label_ are not in the same location
+调整后影像数据形状：(16, 2038, 2041)
+********** 调整完毕 **********
+********** 写入数据 **********
+当前标签数组所有值：
+Value:0 Class:Nan
+Value:1 Class:1
+Value:2 Class:2
+Value:3 Class:3
+Value:4 Class:4
+目标类别及对应数量：
+Class:1 Num:5000
+Class:2 Num:10000
+Class:3 Num:6000
+Class:4 Num:5000
+********** 写入完毕 **********
+********** 样本获取运行时间: 4.292295455932617 秒 **********
+********** 样本数据获取成功! **********
+选择的模型保存路径:E:/self_randomforest_opt/data/model_gbm.pickle
+****************************** 开始训练 ******************************
+模型：LightGBM
+样本路径：E:/self_randomforest_opt/data/sample.csv
+保存路径：E:/self_randomforest_opt/data/model_gbm.pickle
+测试集比例：0.3
+****************************** 获取样本中... ******************************
+****************************** 获取样本完成 ******************************
+****************************** 分割训练集和测试集 ******************************
+****************************** 分割完成 ******************************
+训练集样本数：12976
+测试集样本数：12977
+样本特征数：16
+类别数：4
+****************************** 正在进行超参数优化... ******************************
+最佳参数：{'colsample_bytree': 0.7, 'learning_rate': 0.09, 'max_depth': 7, 'metric': 'multi_logloss', 'min_child_weight': 3, 'n_estimators': 93, 'num_class': 4, 'objective': 'multiclass', 'reg_alpha': 0, 'reg_lambda': 6, 'subsample': 0.6}
+****************************** 超参数优化完成 ******************************
+****************************** 训练中... ******************************
+****************************** 超参数优化完成 ******************************
+****************************** 训练结果 ******************************
+训练集精度：0.999845869297164
+测试集精度：0.9989211682206982
+平均绝对误差：0.0010788317793018417
+召回率：0.9988484003146093
+准确率：0.9989211682206982
+F1值：0.9989720492977399
+***** 训练完成,模型已保存至 E:/self_randomforest_opt/data/model_gbm.pickle *****
+选择的模型路径:E:/self_randomforest_opt/data/model_gbm.pickle
+选择的遥感影像数据路径:E:/self_randomforest_opt/data/img.tif
+选择的NumClass数据路径:E:/self_randomforest_opt/data/ClassDefine.txt
+选择的保存影像数据路径:E:/self_randomforest_opt/data/save01.tif
+******************************读取影像数据******************************
+******************************读取完毕******************************
+******************************预测中...******************************
+******************************预测完毕******************************
+******************************写入******************************
+******************************写入完毕******************************
+*************************程序运行时间：6.9873034954071045s*************************
+******************** 当前页面为:XGBoost ********************
+选择的遥感影像数据路径:E:/self_randomforest_opt/data/img.tif
+选择的标签数据路径:E:/self_randomforest_opt/data/label.tif
+选择的NumClass数据路径:E:/self_randomforest_opt/data/ClassDefine.txt
+选择的输出样本数据路径:E:/self_randomforest_opt/data/sample.csv
+选择的模型保存路径:E:/self_randomforest_opt/data/model_xgb.pickle
+****************************** 开始训练 ******************************
+模型：XGB_train
+样本路径：E:/self_randomforest_opt/data/sample.csv
+保存路径：E:/self_randomforest_opt/data/model_xgb.pickle
+测试集比例：0.3
+****************************** 获取样本中... ******************************
+****************************** 获取样本完成 ******************************
+****************************** 分割训练集和测试集 ******************************
+****************************** 分割完成 ******************************
+训练集样本数：18167
+测试集样本数：7786
+样本特征数：16
+类别数：4
+****************************** 正在进行超参数优化... ******************************
+最佳超参数：{'colsample_bytree': 0.75, 'eval_metric': 'mlogloss', 'gamma': 0, 'learning_rate': 0.09, 'max_depth': 9, 'min_child_weight': 1, 'n_estimators': 115, 'num_class': 4, 'objective': 'multi:softmax', 'reg_alpha': 1, 'reg_lambda': 5, 'subsample': 0.7}
+****************************** 超参数优化完成 ******************************
+****************************** 训练结果 ******************************
+训练集精度：0.9997798205537513
+测试集精度：0.9991009504238376
+平均绝对误差：0.0008990495761623426
+召回率：0.9989201569873428
+准确率：0.9991009504238376
+F1值：0.9991229530497931
+***** 训练完成,模型已保存至 E:/self_randomforest_opt/data/model_xgb.pickle *****
+选择的模型路径:E:/self_randomforest_opt/data/model_xgb.pickle
+选择的遥感影像数据路径:E:/self_randomforest_opt/data/img.tif
+选择的NumClass数据路径:E:/self_randomforest_opt/data/ClassDefine.txt
+选择的保存影像数据路径:E:/self_randomforest_opt/data/save02.tif
+******************************读取影像数据******************************
+******************************读取完毕******************************
+******************************预测******************************
+******************************预测完毕******************************
+******************************写入******************************
+******************************写入完毕******************************
+*************************程序运行时间：2.4818596839904785s*************************
+******************** 当前页面为:随机森林 ********************
+选择的遥感影像数据路径:E:/self_randomforest_opt/data/img.tif
+选择的标签数据路径:E:/self_randomforest_opt/data/label.tif
+选择的NumClass数据路径:E:/self_randomforest_opt/data/ClassDefine.txt
+选择的输出样本数据路径:E:/self_randomforest_opt/data/sample.csv
+********** 开始获取样本数据 **********
+********** 读取影像数据 **********
+Dataset Name:E:/self_randomforest_opt/data/img.tif
+Driver: GTiff/GeoTIFF
+Size is：W2048*H2048*B16
+Projection is：PROJCS["WGS 84 / UTM zone 50N",GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",117],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",0],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["EPSG","32650"]]
+Origin = (208020.0, 3592320.0)
+Pixel Size = (10.0, 10.0)
+原始影像数据形状：(16, 2048, 2048)
+********** 读取完毕 **********
+********** 读取标签数据 **********
+Dataset Name:E:/self_randomforest_opt/data/label.tif
+Driver: GTiff/GeoTIFF
+Size is：W2041*H2038*B1
+Projection is：PROJCS["WGS 84 / UTM zone 50N",GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",117],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",0],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["EPSG","32650"]]
+Origin = (208040.9539984446, 3592236.6685693115)
+Pixel Size = (10.0, 10.0)
+原始标签数据形状：(2038, 2041)
+********** 读取完毕 **********
+********** 调整数据 **********
+Warning: _img_ and _label_ are not in the same location
+调整后影像数据形状：(16, 2038, 2041)
+********** 调整完毕 **********
+********** 写入数据 **********
+当前标签数组所有值：
+Value:0 Class:Nan
+Value:1 Class:1
+Value:2 Class:2
+Value:3 Class:3
+Value:4 Class:4
+目标类别及对应数量：
+Class:1 Num:5000
+Class:2 Num:10000
+Class:3 Num:6000
+Class:4 Num:5000
+********** 写入完毕 **********
+********** 样本获取运行时间: 3.2715296745300293 秒 **********
+********** 样本数据获取成功! **********
+选择的模型保存路径:E:/self_randomforest_opt/data/model_rf.pickle
+选择的模型路径:E:/self_randomforest_opt/data/model_rf.pickle
+选择的遥感影像数据路径:E:/self_randomforest_opt/data/img.tif
+选择的NumClass数据路径:E:/self_randomforest_opt/data/ClassDefine.txt
+选择的保存影像数据路径:E:/self_randomforest_opt/data/save.tif
+******************************读取影像数据******************************
+******************************读取完毕******************************
+******************************预测中...******************************
+******************************预测完毕******************************
+******************************写入******************************
+******************************写入完毕******************************
+************************* 预测运行时间:15.160109996795654 s *************************
