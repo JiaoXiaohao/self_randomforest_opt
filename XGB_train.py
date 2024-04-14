@@ -108,20 +108,22 @@ def XGB_train(sample_path, SavePath, space, msg, test_size=0.5):
     msg.emit("准确率：" + str(accuracy_score(test_label, predict)))
     msg.emit("F1值：" + str(f1_score(test_label, predict, average="macro")))
 # -------------------------------------------------change-------------------------------------
-    # # 交叉验证参数
-    # shuffle = model_selection.ShuffleSplit(n_splits=10, test_size=0.5, random_state=42)
-    # # 绘制学习曲线
-    # plot_learning_curve(
-    #     classifier,
-    #     "学习曲线",
-    #     x,
-    #     y.ravel(),
-    #     ylim=(0, 1.01),
-    #     cv=shuffle,
-    # )
+    # 交叉验证参数
+    shuffle = model_selection.ShuffleSplit(n_splits=10, test_size=0.5, random_state=42)
+    # 绘制学习曲线
+    plot_learning_curve(
+        classifier,
+        "XGB Learning Curve",
+        x,
+        y.ravel(),
+        model_name="XGB",
+        # ylim=(0.7, 1.01),
+        cv=shuffle,
+    )
 
-    # # 绘制特征重要性
-    # PlotImportance_XGB(classifier.feature_importances_)
+    # 绘制特征重要性
+    PlotImportance_XGB(classifier.feature_importances_)
+    msg.emit("*" * 5 + " 学习曲线已生成 " + "*" * 5)
 # -------------------------------------------------------------------------------------------
     # 保存模型
     SavePickle(classifier, SavePath)

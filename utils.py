@@ -22,7 +22,6 @@ import xgboost as xgb
 import lightgbm as lgb
 # 设置lgb使用的cpu核数
 os.environ["LOKY_MAX_CPU_COUNT"] = "4"
-
 from sklearn.metrics import (
     f1_score,
     accuracy_score,
@@ -324,10 +323,10 @@ def PlotHeatmap(corr):
     mask = np.zeros_like(corr)
     mask[np.triu_indices_from(mask)] = False
     # 绘制热力图
-    plt.figure(figsize=(10, 10))
+    plt.figure()
     heatmap(corr, mask=mask, cmap="RdBu_r", annot=True, fmt=".2f")
     plt.savefig("corr.png", dpi=500)
-    plt.show()
+    # plt.show()
 
 
 def Split_train_test_dataset(x, y, test_size=0.2, random_state=1):
@@ -345,10 +344,57 @@ def Split_train_test_dataset(x, y, test_size=0.2, random_state=1):
 
 
 # 绘制学习曲线
-def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None, n_jobs=1):
+# def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None, n_jobs=1):
+#     from sklearn.model_selection import learning_curve
+
+#     plt.figure(figsize=(12, 12))
+#     plt.title(title)
+#     if ylim is not None:
+#         plt.ylim(*ylim)
+#     plt.xlabel("训练样本数")
+#     plt.ylabel("得分")
+#     train_sizes, train_scores, test_scores = learning_curve(estimator, X, y, cv=cv, n_jobs=n_jobs)
+#     train_scores_mean = np.mean(train_scores, axis=1)
+#     train_scores_std = np.std(train_scores, axis=1)
+#     test_scores_mean = np.mean(test_scores, axis=1)  # 计算测试集上的平均得分
+#     test_scores_std = np.std(test_scores, axis=1)  # 计算测试集上的标准差
+#     plt.grid()
+#     plt.fill_between(
+#         train_sizes,
+#         train_scores_mean - train_scores_std,
+#         train_scores_mean + train_scores_std,
+#         alpha=0.1,
+#         color="g",
+#     )
+#     plt.fill_between(
+#         train_sizes,
+#         test_scores_mean - test_scores_std,
+#         test_scores_mean + test_scores_std,
+#         alpha=0.1,
+#         color="b",
+#     )
+#     plt.plot(
+#         train_sizes,
+#         train_scores_mean,
+#         "o-",
+#         color="g",
+#         label="训练集上得分",
+#     )
+#     plt.plot(
+#         train_sizes,
+#         test_scores_mean,
+#         "o-",
+#         color="b",
+#         label="交叉验证集上得分",
+#     )
+#     plt.legend(loc="best")
+#     plt.savefig("学习曲线.png", dpi=800)
+#     # plt.show()
+
+def plot_learning_curve(estimator, title, X, y, model_name,ylim=None, cv=None, n_jobs=1):
     from sklearn.model_selection import learning_curve
 
-    plt.figure(figsize=(12, 12))
+    plt.figure()
     plt.title(title)
     if ylim is not None:
         plt.ylim(*ylim)
@@ -389,19 +435,18 @@ def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None, n_jobs=1):
         label="交叉验证集上得分",
     )
     plt.legend(loc="best")
-    plt.savefig("学习曲线.png", dpi=800)
-    plt.show()
-
+    plt.savefig(f"learning curve of {model_name}.png", dpi=800)
+    # plt.savefig("学习曲线_XBM.png", dpi=800)
 
 def PlotImportance_RF(importances):
     indices = np.argsort(importances)[::-1]
-    plt.figure(figsize=(12, 6))
+    plt.figure()
     plt.title("Feature importances by RandomTreeClassifier")
     plt.bar(range(len(indices)), importances[indices], color="darkorange", align="center")
     plt.xticks(range(len(indices)), indices)
     plt.xlim([-1, len(indices)])
     plt.savefig("Feature importances by RandomTreeClassifier.png", dpi=500)
-    plt.show()
+    # plt.show()
 
 
 def SavePickle(classifier, SavePath):
@@ -457,7 +502,7 @@ def PlotPredictResult(pred, classPath=r"data\\ClassDefine.txt"):
     cmap = ListedColormap(colors)
 
     # 画图
-    plt.figure(figsize=(10, 10))
+    plt.figure()
     plt.imshow(pred, cmap=cmap)
 
     # 为图例添加标签和样式
@@ -467,7 +512,7 @@ def PlotPredictResult(pred, classPath=r"data\\ClassDefine.txt"):
     plt.legend(handles=legend_elements, loc="best")
 
     plt.title("预测结果")
-    plt.show()
+    # plt.show()
 
 
 # ===================== K_Means_Classify.py =====================
@@ -483,7 +528,7 @@ def KMeansExecute(data, K, img_width, img_height, n_init=10, random_state=0):
 def PlotKMeansResult(labels):
     # 显示聚类结果
     plt.imshow(labels, cmap="rainbow")
-    plt.show()
+    # plt.show()
 
 
 # ===================== SVM_Classify.py =====================
@@ -546,13 +591,13 @@ def PlotImportance_XGB(importances):
     # print("Feature ranking:")
     # for f in range(len(indices)):
     #     print("%d. feature %d (%f)" % (f + 1, indices[f], importances[indices[f]]))
-    plt.figure(figsize=(12, 6))
+    plt.figure()
     plt.title("Feature importances by XGBoost")
     plt.bar(range(len(indices)), importances[indices], color="darkorange", align="center")
     plt.xticks(range(len(indices)), indices)
     plt.xlim([-1, len(indices)])
     plt.savefig("Feature importances by XGBoost.png", dpi=500)
-    plt.show()
+    # plt.show()
 
 
 def Predict_XGB_func(model_path, _img_):
@@ -583,13 +628,13 @@ def PlotImportance_LGBM(importances, feature_names):
     # print("Feature ranking:")
     # for f in range(len(indices)):
     #     print("%d. feature %d (%f)" % (f + 1, indices[f], importances[indices[f]]))
-    plt.figure(figsize=(12, 6))
+    plt.figure()
     plt.title("Feature importances by LightGBM")
     plt.bar(range(len(indices)), importances[indices], color="darkorange", align="center")
     plt.xticks(range(len(indices)), list(np.array(feature_names)[indices]), rotation="vertical")
     plt.xlim([-1, len(indices)])
     plt.savefig("Feature importances by LightGBM.png", dpi=500)
-    plt.show()
+    # plt.show()
 
 
 def Predict_LGBM_func(model_path, _img_):
@@ -615,6 +660,7 @@ def Predict_LGBM_func(model_path, _img_):
 
 
 # ===================== ui_functions.py =====================
+# 选择的遥感影像数据路径
 def selectImgPath(lineEdit, log_textBrowser):
     try:
         img, _ = QtWidgets.QFileDialog.getOpenFileName(
@@ -626,7 +672,7 @@ def selectImgPath(lineEdit, log_textBrowser):
     except Exception as e:
         QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
 
-
+# 选择的标签数据路径
 def selectLabelPath(lineEdit, log_textBrowser):
     try:
         label, _ = QtWidgets.QFileDialog.getOpenFileName(
@@ -638,7 +684,7 @@ def selectLabelPath(lineEdit, log_textBrowser):
     except Exception as e:
         QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
 
-
+# 选择的输出样本数据路径
 def selectOutSamplePath(lineEdit, log_textBrowser):
     try:
         # 新建文件的输出路径文件名
@@ -651,7 +697,7 @@ def selectOutSamplePath(lineEdit, log_textBrowser):
     except Exception as e:
         QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
 
-
+# 选择的NumClass数据路径
 def selectNumClassPath(lineEdit, log_textBrowser):
     try:
         NumClassPath, _ = QtWidgets.QFileDialog.getOpenFileName(
@@ -663,7 +709,7 @@ def selectNumClassPath(lineEdit, log_textBrowser):
     except Exception as e:
         QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
 
-
+# 选择的模型保存路径
 def selectSaveModelPath(lineEdit, log_textBrowser):
     try:
         model, _ = QtWidgets.QFileDialog.getSaveFileName(
@@ -675,7 +721,7 @@ def selectSaveModelPath(lineEdit, log_textBrowser):
     except Exception as e:
         QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
 
-
+# 选择的模型路径
 def selectModelPath(lineEdit, log_textBrowser):
     try:
         model, _ = QtWidgets.QFileDialog.getOpenFileName(
@@ -687,7 +733,7 @@ def selectModelPath(lineEdit, log_textBrowser):
     except Exception as e:
         QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
 
-
+# 选择的保存影像数据路径
 def selectSaveImgPath(lineEdit, log_textBrowser):
     try:
         img, _ = QtWidgets.QFileDialog.getSaveFileName(
@@ -699,10 +745,9 @@ def selectSaveImgPath(lineEdit, log_textBrowser):
     except Exception as e:
         QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
 
-
 # get samples clicked
 
-
+# 获取样本
 def GetSamplesF(
     img_lineEdit,
     label_lineEdit,

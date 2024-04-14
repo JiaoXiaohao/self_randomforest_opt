@@ -129,20 +129,22 @@ def LightGBM_train(sample_path,SavePath,space,msg,test_size=0.5,):
     msg.emit("F1值：" + str(f1_score(test_label, predict, average="macro")))
 # -------------------------------------------change------------------------------------------
     # # 交叉验证参数
-    # shuffle = model_selection.ShuffleSplit(n_splits=10, test_size=0.5, random_state=42)
-    # # 绘制学习曲线
-    # plot_learning_curve(
-    #     clf,
-    #     "LightGBM Learning Curve",
-    #     train_data,
-    #     train_label.ravel(),
-    #     cv=shuffle,
-    #     n_jobs=-1,
-    # )
-    # # 绘制特征重要性
-    # # msg.emit("特征重要性：", clf.feature_importances_)
+    shuffle = model_selection.ShuffleSplit(n_splits=10, test_size=0.5, random_state=42)
+    # 绘制学习曲线
+    plot_learning_curve(
+        clf,
+        "LightGBM Learning Curve",
+        train_data,
+        train_label.ravel(),
+        model_name="LightGBM",
+        cv=shuffle,
+        # ylim=(0.7,1.01),
+    )
+    # 绘制特征重要性
+    PlotImportance_LGBM(clf.feature_importances_, column_names[:-1])
+    msg.emit("*" * 5 + " 学习曲线已生成 " + "*" * 5)
+    # msg.emit("特征重要性：", clf.feature_importances_)
 # --------------------------------------------------------------------------------------
-    # PlotImportance_LGBM(clf.feature_importances_, column_names[:-1])
     # msg.emit("*" * 30 + " 训练完成 " + "*" * 30)
     # 保存模型
     SavePickle(clf, SavePath)

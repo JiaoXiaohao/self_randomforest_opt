@@ -109,20 +109,22 @@ def RF_train(sample_path, SavePath, space, msg, test_size=0.5):
     # ------------------------------- change -------------------------------
     # 绘制学习曲线
     # 交叉验证参数
-    # shuffle = model_selection.ShuffleSplit(n_splits=10, test_size=0.5, random_state=42)
-    # plot_learning_curve(
-    #     classifier,
-    #     "学习曲线",
-    #     x,
-    #     y.ravel(),
-    #     ylim=(0.7, 1.01),
-    #     cv=shuffle,
-    #     n_jobs=4,
-    # )
+    shuffle = model_selection.ShuffleSplit(n_splits=10, test_size=0.5, random_state=42)
+    plot_learning_curve(
+        classifier,
+        "RandomForest Learning Curve",
+        x,
+        y.ravel(),
+        model_name="RandomForest",
+        # ylim=(0.7, 1.01),
+        cv=shuffle,
+    )
 
     # ------------------------------- change -------------------------------
     # 绘制特征重要性
-    # PlotImportance_RF(classifier.feature_importances_)
+    PlotImportance_RF(classifier.feature_importances_)
+    msg.emit("*" * 5 + " 学习曲线已生成 " + "*" * 5)
+
     # 保存模型
     SavePickle(classifier, SavePath)
     msg.emit("*" * 5 + f" 训练完成,模型已保存至 {SavePath} " + "*" * 5)
