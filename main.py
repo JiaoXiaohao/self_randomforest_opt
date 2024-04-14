@@ -17,6 +17,7 @@ if __name__ == "__main__":
     MainWindow = QMainWindow()
     ui = ClassificationUI()
     ui.setupUi(MainWindow)
+    # 设置图标
     MainWindow.setWindowIcon(QIcon("icon.png"))
     MainWindow.show()
     sys.exit(app.exec_())
