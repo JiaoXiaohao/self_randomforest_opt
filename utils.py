@@ -6,21 +6,26 @@
 # File name: utils.py
 # Nothing is true, everything is permitted.
 
+# 导入绘图模块
+import scienceplots
+import matplotlib
+import matplotlib.pyplot as plt
+from matplotlib.patches import Patch
+from matplotlib.colors import ListedColormap
+from seaborn import heatmap
+
+# 导入数据处理模块
+import csv
+import pandas as pd
+import xgboost as xgb
+import lightgbm as lgb
 from osgeo import gdal
 import os
 from sklearn import datasets
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 from sklearn import model_selection
-import pickle
-import matplotlib
-import matplotlib.pyplot as plt
-from seaborn import heatmap
-import csv
-import pandas as pd
-import xgboost as xgb
-import lightgbm as lgb
-# 设置lgb使用的cpu核数
+
 os.environ["LOKY_MAX_CPU_COUNT"] = "4"
 from sklearn.metrics import (
     f1_score,
@@ -30,21 +35,24 @@ from sklearn.metrics import (
     mean_absolute_error,
 )
 from sklearn.cluster import KMeans
+
+# 导入超参数调优模块
 from hyperopt import hp, fmin, tpe, Trials, space_eval, STATUS_OK
-from warnings import simplefilter
-from matplotlib.patches import Patch
-from matplotlib.colors import ListedColormap
+
+
+# 导入模型保存模块
+import pickle
+
 # import tqdm
+# 导入图形界面模块
 from PyQt5 import QtCore, QtGui, QtWidgets
 import time
-
-
-# matplotlib.use("Qt5Agg")  # 后端渲染或者用'svg'
+from warnings import simplefilter
 
 simplefilter(action="ignore", category=FutureWarning)
-plt.style.use("seaborn-whitegrid")
+plt.style.use("classic")
 # 设置中文字体
-plt.rcParams["font.sans-serif"] = ["SimHei"]
+plt.rcParams["font.sans-serif"] = ["Times New Roman", "SimHei"]
 # 设置负号正常显示
 plt.rcParams["axes.unicode_minus"] = False
 
@@ -329,18 +337,18 @@ def PlotHeatmap(corr):
     # plt.show()
 
 
-def Split_train_test_dataset(x, y, test_size=0.2, random_state=1):
-    # 分割训练集和测试集
-    train_data, test_data, train_label, test_label = model_selection.train_test_split(
+def Split_train_val_dataset(x, y, val_size=0.2, random_state=1):
+    # 分割训练集和验证集
+    train_data, val_data, train_label, val_label = model_selection.train_val_split(
         x,
         y,
         random_state=random_state,
-        test_size=test_size,
+        val_size=val_size,
     )
-    # 输出训练集和测试集的样本数量和特征数量
+    # 输出训练集和验证集的样本数量和特征数量
     # print("训练集样本数量：", train_data.shape[0])
-    # print("测试集样本数量：", test_data.shape[0])
-    return train_data, test_data, train_label, test_label
+    # print("验证集样本数量：", val_data.shape[0])
+    return train_data, val_data, train_label, val_label
 
 
 # 绘制学习曲线
@@ -353,11 +361,11 @@ def Split_train_test_dataset(x, y, test_size=0.2, random_state=1):
 #         plt.ylim(*ylim)
 #     plt.xlabel("训练样本数")
 #     plt.ylabel("得分")
-#     train_sizes, train_scores, test_scores = learning_curve(estimator, X, y, cv=cv, n_jobs=n_jobs)
+#     train_sizes, train_scores, val_scores = learning_curve(estimator, X, y, cv=cv, n_jobs=n_jobs)
 #     train_scores_mean = np.mean(train_scores, axis=1)
 #     train_scores_std = np.std(train_scores, axis=1)
-#     test_scores_mean = np.mean(test_scores, axis=1)  # 计算测试集上的平均得分
-#     test_scores_std = np.std(test_scores, axis=1)  # 计算测试集上的标准差
+#     val_scores_mean = np.mean(val_scores, axis=1)  # 计算验证集上的平均得分
+#     val_scores_std = np.std(val_scores, axis=1)  # 计算验证集上的标准差
 #     plt.grid()
 #     plt.fill_between(
 #         train_sizes,
@@ -368,8 +376,8 @@ def Split_train_test_dataset(x, y, test_size=0.2, random_state=1):
 #     )
 #     plt.fill_between(
 #         train_sizes,
-#         test_scores_mean - test_scores_std,
-#         test_scores_mean + test_scores_std,
+#         val_scores_mean - val_scores_std,
+#         val_scores_mean + val_scores_std,
 #         alpha=0.1,
 #         color="b",
 #     )
@@ -382,7 +390,7 @@ def Split_train_test_dataset(x, y, test_size=0.2, random_state=1):
 #     )
 #     plt.plot(
 #         train_sizes,
-#         test_scores_mean,
+#         val_scores_mean,
 #         "o-",
 #         color="b",
 #         label="交叉验证集上得分",
@@ -391,20 +399,20 @@ def Split_train_test_dataset(x, y, test_size=0.2, random_state=1):
 #     plt.savefig("学习曲线.png", dpi=800)
 #     # plt.show()
 
-def plot_learning_curve(estimator, title, X, y, model_name,ylim=None, cv=None, n_jobs=1):
+
+def plot_learning_curve(estimator, title, X, y, model_name, ylim=None, cv=None, n_jobs=1):
     from sklearn.model_selection import learning_curve
 
-    plt.figure()
     plt.title(title)
     if ylim is not None:
         plt.ylim(*ylim)
     plt.xlabel("训练样本数")
     plt.ylabel("得分")
-    train_sizes, train_scores, test_scores = learning_curve(estimator, X, y, cv=cv, n_jobs=n_jobs)
+    train_sizes, train_scores, val_scores = learning_curve(estimator, X, y, cv=cv, n_jobs=n_jobs)
     train_scores_mean = np.mean(train_scores, axis=1)
     train_scores_std = np.std(train_scores, axis=1)
-    test_scores_mean = np.mean(test_scores, axis=1)  # 计算测试集上的平均得分
-    test_scores_std = np.std(test_scores, axis=1)  # 计算测试集上的标准差
+    val_scores_mean = np.mean(val_scores, axis=1)  # 计算验证集上的平均得分
+    val_scores_std = np.std(val_scores, axis=1)  # 计算验证集上的标准差
     plt.grid()
     plt.fill_between(
         train_sizes,
@@ -415,8 +423,8 @@ def plot_learning_curve(estimator, title, X, y, model_name,ylim=None, cv=None, n
     )
     plt.fill_between(
         train_sizes,
-        test_scores_mean - test_scores_std,
-        test_scores_mean + test_scores_std,
+        val_scores_mean - val_scores_std,
+        val_scores_mean + val_scores_std,
         alpha=0.1,
         color="b",
     )
@@ -429,7 +437,7 @@ def plot_learning_curve(estimator, title, X, y, model_name,ylim=None, cv=None, n
     )
     plt.plot(
         train_sizes,
-        test_scores_mean,
+        val_scores_mean,
         "o-",
         color="b",
         label="交叉验证集上得分",
@@ -437,6 +445,7 @@ def plot_learning_curve(estimator, title, X, y, model_name,ylim=None, cv=None, n
     plt.legend(loc="best")
     plt.savefig(f"learning curve of {model_name}.png", dpi=800)
     # plt.savefig("学习曲线_XBM.png", dpi=800)
+
 
 def PlotImportance_RF(importances):
     indices = np.argsort(importances)[::-1]
@@ -540,7 +549,7 @@ def Predict_SVM(model_path, _img_):
     # 关闭文件
     file.close()
     # 用读入的模型进行预测
-    # 在与测试前要调整一下数据的格式
+    # 在测试前要调整一下数据的格式
     data = np.zeros((_img_.shape[0], _img_.shape[1] * _img_.shape[2]))
     # 使用tqdm显示进度
     for i in range(_img_.shape[0]):
@@ -672,6 +681,7 @@ def selectImgPath(lineEdit, log_textBrowser):
     except Exception as e:
         QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
 
+
 # 选择的标签数据路径
 def selectLabelPath(lineEdit, log_textBrowser):
     try:
@@ -683,6 +693,7 @@ def selectLabelPath(lineEdit, log_textBrowser):
             printLog("选择的标签数据路径:" + str(label), log_textBrowser)
     except Exception as e:
         QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
+
 
 # 选择的输出样本数据路径
 def selectOutSamplePath(lineEdit, log_textBrowser):
@@ -697,6 +708,7 @@ def selectOutSamplePath(lineEdit, log_textBrowser):
     except Exception as e:
         QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
 
+
 # 选择的NumClass数据路径
 def selectNumClassPath(lineEdit, log_textBrowser):
     try:
@@ -708,6 +720,7 @@ def selectNumClassPath(lineEdit, log_textBrowser):
             printLog("选择的NumClass数据路径:" + str(NumClassPath), log_textBrowser)
     except Exception as e:
         QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
+
 
 # 选择的模型保存路径
 def selectSaveModelPath(lineEdit, log_textBrowser):
@@ -721,6 +734,7 @@ def selectSaveModelPath(lineEdit, log_textBrowser):
     except Exception as e:
         QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
 
+
 # 选择的模型路径
 def selectModelPath(lineEdit, log_textBrowser):
     try:
@@ -732,6 +746,7 @@ def selectModelPath(lineEdit, log_textBrowser):
             printLog("选择的模型路径:" + str(model), log_textBrowser)
     except Exception as e:
         QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
+
 
 # 选择的保存影像数据路径
 def selectSaveImgPath(lineEdit, log_textBrowser):
@@ -745,7 +760,9 @@ def selectSaveImgPath(lineEdit, log_textBrowser):
     except Exception as e:
         QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
 
+
 # get samples clicked
+
 
 # 获取样本
 def GetSamplesF(
@@ -771,6 +788,7 @@ def GetSamplesF(
             msg.emit("*" * 10 + " 请检查输入路径是否正确 " + "*" * 10)
     except Exception as e:
         QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
+
 
 def float_range(start, end, step):
     return [start + step * i for i in range(int((end - start) / step))]

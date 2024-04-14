@@ -12,6 +12,7 @@ from classes import *
 class ClassificationUI(object):
     def ThreadLog(self, msg):
         self.log_text_browser.append(msg)
+
     def SaveLogButton_clicked(self):
         # 获取当前text browser的文本
 
@@ -20,13 +21,12 @@ class ClassificationUI(object):
             # 获取当前text browser的文本
             text = self.log_text_browser.toPlainText()
             # 新建文件的输出路径文件名
-            out_path, _ = QtWidgets.QFileDialog.getSaveFileName(
-                None, "Save File", "", "Text Files(*.txt)"
-            )
+            out_path, _ = QtWidgets.QFileDialog.getSaveFileName(None, "Save File", "", "Text Files(*.txt)")
             open(out_path, "w").write(text)
             QtWidgets.QMessageBox.information(None, "成功", "成功保存日志文件!", QtWidgets.QMessageBox.Ok)
         except Exception as e:
             QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
+
     def get_page_space(self):
         if self.tabWidgetPages.currentIndex() == 0:
             space = {
@@ -163,7 +163,7 @@ class ClassificationUI(object):
                 "max_depth": hp.choice(
                     "max_depth",
                     range(
-                        int( self.XGB_max_depth_min.text()),
+                        int(self.XGB_max_depth_min.text()),
                         int(self.XGB_max_depth_max.text()),
                         int(self.XGB_max_depth_interval.text()),
                     ),
@@ -284,13 +284,13 @@ class ClassificationUI(object):
         if (
             not self.RF_output_samples_path.text()
             or not self.RF_train_model_save_path.text()
-            or not self.RF_test_datasets_size.text()
+            or not self.RF_val_datasets_size.text()
         ):
             self.log_text_browser.append("请检查路径!!!!")
             return
         # 判断data_size是否为浮点数字
         try:
-            float(self.RF_test_datasets_size.text())
+            float(self.RF_val_datasets_size.text())
         except:
             self.log_text_browser.append("请输入正确的数据集大小!!!!")
             return
@@ -299,7 +299,7 @@ class ClassificationUI(object):
             self.RF_output_samples_path.text(),
             self.RF_train_model_save_path.text(),
             self.get_page_space(),
-            float(self.RF_test_datasets_size.text()),
+            float(self.RF_val_datasets_size.text()),
             "RandomForest",
         )
         self.trainThread.error.connect(self.ThreadLog)
@@ -382,13 +382,13 @@ class ClassificationUI(object):
         if (
             not self.XGB_output_samples_path.text()
             or not self.XGB_train_model_save_path.text()
-            or not self.XGB_test_datasets_size.text()
+            or not self.XGB_val_datasets_size.text()
         ):
             self.log_text_browser.append("请检查路径!!!!")
             return
         # 判断data_size是否为浮点数字
         try:
-            float(self.XGB_test_datasets_size.text())
+            float(self.XGB_val_datasets_size.text())
         except:
             self.log_text_browser.append("请输入正确的数据集大小!!!!")
             return
@@ -397,7 +397,7 @@ class ClassificationUI(object):
             self.XGB_output_samples_path.text(),
             self.XGB_train_model_save_path.text(),
             self.get_page_space(),
-            float(self.XGB_test_datasets_size.text()),
+            float(self.XGB_val_datasets_size.text()),
             "XGBoost",
         )
         self.trainThread.error.connect(self.ThreadLog)
@@ -425,6 +425,7 @@ class ClassificationUI(object):
         self.predictThread.error.connect(self.ThreadLog)
         self.predictThread.msg.connect(self.ThreadLog)
         self.predictThread.start()
+
     # LGB数据获取部分的按钮点击链接
     def LGB_select_image_pushbutton_clicked(self):
         selectImgPath(self.LGB_img_path, self.log_text_browser)
@@ -446,7 +447,7 @@ class ClassificationUI(object):
 
     def select_LGB_class_num_button_2_clicked(self):
         selectNumClassPath(self.LGB_class_num_path_2, self.log_text_browser)
-    
+
     def LGB_select_predict_result_output_path_pushbutton_clicked(self):
         selectSaveImgPath(self.LGB_output_predict_result_path, self.log_text_browser)
 
@@ -479,13 +480,13 @@ class ClassificationUI(object):
         if (
             not self.LGB_output_samples_path.text()
             or not self.LGB_train_model_save_path.text()
-            or not self.LGB_test_datasets_size.text()
+            or not self.LGB_val_datasets_size.text()
         ):
             self.log_text_browser.append("请检查路径!!!!")
             return
         # 判断data_size是否为浮点数字
         try:
-            float(self.LGB_test_datasets_size.text())
+            float(self.LGB_val_datasets_size.text())
         except:
             self.log_text_browser.append("请输入正确的数据集大小!!!!")
             return
@@ -494,7 +495,7 @@ class ClassificationUI(object):
             self.LGB_output_samples_path.text(),
             self.LGB_train_model_save_path.text(),
             self.get_page_space(),
-            float(self.LGB_test_datasets_size.text()),
+            float(self.LGB_val_datasets_size.text()),
             "LightGBM",
         )
         self.trainThread.error.connect(self.ThreadLog)
@@ -663,12 +664,12 @@ class ClassificationUI(object):
 
         self.RF_train_button.clicked.connect(self.RF_train_pushButton_clicked)
 
-        self.RF_test_datasets_size_label = QtWidgets.QLabel(self.RF_train_group)
-        self.RF_test_datasets_size_label.setGeometry(QtCore.QRect(10, 20, 100, 20))
-        self.RF_test_datasets_size_label.setObjectName("RF_test_datasets_size_label")
-        self.RF_test_datasets_size = QtWidgets.QLineEdit(self.RF_train_group)
-        self.RF_test_datasets_size.setGeometry(QtCore.QRect(130, 20, 100, 20))
-        self.RF_test_datasets_size.setObjectName("test_datasets_size")
+        self.RF_val_datasets_size_label = QtWidgets.QLabel(self.RF_train_group)
+        self.RF_val_datasets_size_label.setGeometry(QtCore.QRect(10, 20, 100, 20))
+        self.RF_val_datasets_size_label.setObjectName("RF_val_datasets_size_label")
+        self.RF_val_datasets_size = QtWidgets.QLineEdit(self.RF_train_group)
+        self.RF_val_datasets_size.setGeometry(QtCore.QRect(130, 20, 100, 20))
+        self.RF_val_datasets_size.setObjectName("val_datasets_size")
 
         self.RF_n_estimators_label = QtWidgets.QLabel(self.RF_train_group)
         self.RF_n_estimators_label.setGeometry(QtCore.QRect(10, 65, 130, 20))
@@ -921,12 +922,12 @@ class ClassificationUI(object):
 
         # 训练的参数设置
         # 训练参数比例
-        self.LGB_test_datasets_size_label = QtWidgets.QLabel(self.LGB_train_group)
-        self.LGB_test_datasets_size_label.setGeometry(QtCore.QRect(10, 30, 100, 20))
-        self.LGB_test_datasets_size_label.setObjectName("LGB_test_datasets_size_label")
-        self.LGB_test_datasets_size = QtWidgets.QLineEdit(self.LGB_train_group)
-        self.LGB_test_datasets_size.setGeometry(QtCore.QRect(130, 30, 100, 20))
-        self.LGB_test_datasets_size.setObjectName("test_datasets_size")
+        self.LGB_val_datasets_size_label = QtWidgets.QLabel(self.LGB_train_group)
+        self.LGB_val_datasets_size_label.setGeometry(QtCore.QRect(10, 30, 100, 20))
+        self.LGB_val_datasets_size_label.setObjectName("LGB_val_datasets_size_label")
+        self.LGB_val_datasets_size = QtWidgets.QLineEdit(self.LGB_train_group)
+        self.LGB_val_datasets_size.setGeometry(QtCore.QRect(130, 30, 100, 20))
+        self.LGB_val_datasets_size.setObjectName("val_datasets_size")
 
         self.LGB_Min_label = QtWidgets.QLabel(self.LGB_train_group)
         self.LGB_Min_label.setGeometry(QtCore.QRect(188, 55, 80, 20))
@@ -1192,12 +1193,12 @@ class ClassificationUI(object):
 
         # 训练的参数设置
         # 训练参数比例
-        self.XGB_test_datasets_size_label = QtWidgets.QLabel(self.XGB_train_group)
-        self.XGB_test_datasets_size_label.setGeometry(QtCore.QRect(10, 20, 100, 20))
-        self.XGB_test_datasets_size_label.setObjectName("XGB_test_datasets_size_label")
-        self.XGB_test_datasets_size = QtWidgets.QLineEdit(self.XGB_train_group)
-        self.XGB_test_datasets_size.setGeometry(QtCore.QRect(130, 20, 100, 20))
-        self.XGB_test_datasets_size.setObjectName("test_datasets_size")
+        self.XGB_val_datasets_size_label = QtWidgets.QLabel(self.XGB_train_group)
+        self.XGB_val_datasets_size_label.setGeometry(QtCore.QRect(10, 20, 100, 20))
+        self.XGB_val_datasets_size_label.setObjectName("XGB_val_datasets_size_label")
+        self.XGB_val_datasets_size = QtWidgets.QLineEdit(self.XGB_train_group)
+        self.XGB_val_datasets_size.setGeometry(QtCore.QRect(130, 20, 100, 20))
+        self.XGB_val_datasets_size.setObjectName("val_datasets_size")
 
         self.XGB_Min_label = QtWidgets.QLabel(self.XGB_train_group)
         self.XGB_Min_label.setGeometry(QtCore.QRect(188, 45, 80, 20))
@@ -1410,8 +1411,8 @@ class ClassificationUI(object):
         self.RF_get_samples_button.setText(_translate("MainWindow", "获取样本"))
         self.RF_train_group.setTitle(_translate("MainWindow", "训练寻优参数"))
         self.RF_train_button.setText(_translate("MainWindow", "训练"))
-        self.RF_test_datasets_size_label.setText(_translate("MainWindow", "测试集比例:"))
-        self.RF_test_datasets_size.setText(_translate("MainWindow", "0.3"))
+        self.RF_val_datasets_size_label.setText(_translate("MainWindow", "验证集比例:"))
+        self.RF_val_datasets_size.setText(_translate("MainWindow", "0.3"))
         self.RF_n_estimators_label.setText(_translate("MainWindow", "n_estimators:"))
         self.RF_n_estimators_min.setText(_translate("MainWindow", "50"))
         self.RF_n_estimators_interval.setText(_translate("MainWindow", "1"))
@@ -1469,8 +1470,8 @@ class ClassificationUI(object):
         self.XGB_get_samples_button.setText(_translate("MainWindow", "获取样本"))
         self.XGB_train_group.setTitle(_translate("MainWindow", "训练寻优参数"))
         self.XGB_train_button.setText(_translate("MainWindow", "训练"))
-        self.XGB_test_datasets_size_label.setText(_translate("MainWindow", "测试集比例:"))
-        self.XGB_test_datasets_size.setText(_translate("MainWindow", "0.3"))
+        self.XGB_val_datasets_size_label.setText(_translate("MainWindow", "验证集比例:"))
+        self.XGB_val_datasets_size.setText(_translate("MainWindow", "0.3"))
         self.XGB_n_estimators_label.setText(_translate("MainWindow", "n_estimators:"))
         self.XGB_n_estimators_min.setText(_translate("MainWindow", "50"))
         self.XGB_n_estimators_max.setText(_translate("MainWindow", "150"))
@@ -1540,8 +1541,8 @@ class ClassificationUI(object):
         self.LGB_get_samples_button.setText(_translate("MainWindow", "获取样本"))
         self.LGB_train_group.setTitle(_translate("MainWindow", "训练寻优参数"))
         self.LGB_train_button.setText(_translate("MainWindow", "训练"))
-        self.LGB_test_datasets_size_label.setText(_translate("MainWindow", "测试集比例:"))
-        self.LGB_test_datasets_size.setText(_translate("MainWindow", "0.3"))
+        self.LGB_val_datasets_size_label.setText(_translate("MainWindow", "验证集比例:"))
+        self.LGB_val_datasets_size.setText(_translate("MainWindow", "0.3"))
         self.LGB_n_estimators_label.setText(_translate("MainWindow", "n_estimators:"))
         self.LGB_n_estimators_min.setText(_translate("MainWindow", "50"))
         self.LGB_n_estimators_max.setText(_translate("MainWindow", "150"))
