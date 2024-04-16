@@ -1,20 +1,12 @@
 # -*- coding: utf-8 -*-
-# Author: jiaoxiaohao
-# E-mail: jiaoxiaohao876@gmail.com
-# Time: 2024-03-10 19:19:15
-# File name: Ui___UI__.py
-# Nothing is true, everything is permitted.
-
+# File name: __UI__.py
 from PyQt5 import QtCore, QtGui, QtWidgets
 from classes import *
-
-
 class ClassificationUI(object):
     def ThreadLog(self, msg):
         self.log_text_browser.append(msg)
     def SaveLogButton_clicked(self):
         # 获取当前text browser的文本
-
         # 打开一个保存文件选择的框
         try:
             # 获取当前text browser的文本
@@ -229,35 +221,25 @@ class ClassificationUI(object):
                 # "boosting_type": "gbdt",
             }
             return space
-
     # 随机森林数据获取部分的按钮点击链接
     def RF_select_image_pushbutton_clicked(self):
         selectImgPath(self.RF_img_path, self.log_text_browser)
-
     def RF_select_label_pushbutton_clicked(self):
         selectLabelPath(self.RF_label_path, self.log_text_browser)
-
     def RF_select_numclass_path_pushButton_clicked(self):
         selectNumClassPath(self.RF_class_num_path, self.log_text_browser)
-
     def RF_select_sample_path_pushButton_clicked(self):
         selectOutSamplePath(self.RF_output_samples_path, self.log_text_browser)
-
     def select_RF_train_Save_model_path_pushButton_clicked(self):
         selectSaveModelPath(self.RF_train_model_save_path, self.log_text_browser)
-
     def select_RF_model_path_pushButton_clicked(self):
         selectModelPath(self.RF_model_path, self.log_text_browser)
-
     def select_RF_class_num_pushButton_clicked(self):
         selectNumClassPath(self.RF_class_num_path_2, self.log_text_browser)
-
     def select_RF_predict_result_output_path_pushButton_clicked(self):
         selectSaveImgPath(self.RF_output_predict_result_path, self.log_text_browser)
-
     def select_RF_img_predict_path_pushButton_clicked(self):
         selectImgPath(self.RF_img_predict_path, self.log_text_browser)
-
     def RF_get_sample_pushButton_clicked(self):
         # 判断是否有路径
         if (
@@ -278,7 +260,6 @@ class ClassificationUI(object):
         self.getSamplesFThread.error.connect(self.ThreadLog)
         self.getSamplesFThread.msg.connect(self.ThreadLog)
         self.getSamplesFThread.start()
-
     def RF_train_pushButton_clicked(self):
         # 判断是否有路径
         if (
@@ -305,7 +286,6 @@ class ClassificationUI(object):
         self.trainThread.error.connect(self.ThreadLog)
         self.trainThread.msg.connect(self.ThreadLog)
         self.trainThread.start()
-
     def RF_predict_pushButton_clicked(self):
         # 判断是否有路径
         if (
@@ -327,35 +307,25 @@ class ClassificationUI(object):
         self.predictThread.error.connect(self.ThreadLog)
         self.predictThread.msg.connect(self.ThreadLog)
         self.predictThread.start()
-
     # XGB数据获取部分的按钮点击链接
     def XGB_select_image_pushbutton_clicked(self):
         selectImgPath(self.XGB_img_path, self.log_text_browser)
-
     def XGB_select_label_pushbutton_clicked(self):
         selectLabelPath(self.XGB_label_path, self.log_text_browser)
-
     def XGB_select_numclass_path_pushbutton_clicked(self):
         selectNumClassPath(self.XGB_class_num_path, self.log_text_browser)
-
     def XGB_select_sample_path_pushbutton_clicked(self):
         selectOutSamplePath(self.XGB_output_samples_path, self.log_text_browser)
-
     def select_XGB_train_Save_model_path_pushButton_clicked(self):
         selectSaveModelPath(self.XGB_train_model_save_path, self.log_text_browser)
-
     def select_XGB_model_path_pushButton_clicked(self):
         selectModelPath(self.XGB_model_path, self.log_text_browser)
-
     def select_XGB_class_num_button_2_clicked(self):
         selectNumClassPath(self.XGB_class_num_path_2, self.log_text_browser)
-
     def XGB_select_predict_result_output_path_pushButton_clicked(self):
         selectSaveImgPath(self.XGB_output_predict_result_path, self.log_text_browser)
-
     def select_XGB_img_predict_path_pushButton_clicked(self):
         selectImgPath(self.XGB_img_predict_path, self.log_text_browser)
-
     def XGB_get_sample_pushButton_clicked(self):
         # 判断是否有路径
         if (
@@ -376,7 +346,6 @@ class ClassificationUI(object):
         self.getSamplesFThread.error.connect(self.ThreadLog)
         self.getSamplesFThread.msg.connect(self.ThreadLog)
         self.getSamplesFThread.start()
-
     def XGB_train_pushButton_clicked(self):
         # 判断是否有路径
         if (
@@ -403,7 +372,6 @@ class ClassificationUI(object):
         self.trainThread.error.connect(self.ThreadLog)
         self.trainThread.msg.connect(self.ThreadLog)
         self.trainThread.start()
-
     def XGB_predict_pushButton_clicked(self):
         # 判断是否有路径
         if (
@@ -428,31 +396,22 @@ class ClassificationUI(object):
     # LGB数据获取部分的按钮点击链接
     def LGB_select_image_pushbutton_clicked(self):
         selectImgPath(self.LGB_img_path, self.log_text_browser)
-
     def LGB_select_label_pushbutton_clicked(self):
         selectLabelPath(self.LGB_label_path, self.log_text_browser)
-
     def LGB_select_numclass_path_pushbutton_clicked(self):
         selectNumClassPath(self.LGB_class_num_path, self.log_text_browser)
-
     def LGB_select_sample_path_pushbutton_clicked(self):
         selectOutSamplePath(self.LGB_output_samples_path, self.log_text_browser)
-
     def select_LGB_train_Save_model_path_pushButton_clicked(self):
         selectSaveModelPath(self.LGB_train_model_save_path, self.log_text_browser)
-
     def select_LGB_model_path_pushbutton_clicked(self):
         selectModelPath(self.LGB_model_path, self.log_text_browser)
-
     def select_LGB_class_num_button_2_clicked(self):
         selectNumClassPath(self.LGB_class_num_path_2, self.log_text_browser)
-    
     def LGB_select_predict_result_output_path_pushbutton_clicked(self):
         selectSaveImgPath(self.LGB_output_predict_result_path, self.log_text_browser)
-
     def select_LGB_img_predict_path_button_clicked(self):
         selectImgPath(self.LGB_img_predict_path, self.log_text_browser)
-
     def LGB_get_sample_pushButton_clicked(self):
         # 判断是否有路径
         if (
@@ -473,7 +432,6 @@ class ClassificationUI(object):
         self.getSamplesFThread.error.connect(self.ThreadLog)
         self.getSamplesFThread.msg.connect(self.ThreadLog)
         self.getSamplesFThread.start()
-
     def LGB_train_pushButton_clicked(self):
         # 判断是否有路径
         if (
@@ -500,7 +458,6 @@ class ClassificationUI(object):
         self.trainThread.error.connect(self.ThreadLog)
         self.trainThread.msg.connect(self.ThreadLog)
         self.trainThread.start()
-
     def LGB_predict_pushButton_clicked(self):
         # 判断是否有路径
         if (
@@ -522,7 +479,6 @@ class ClassificationUI(object):
         self.predictThread.error.connect(self.ThreadLog)
         self.predictThread.msg.connect(self.ThreadLog)
         self.predictThread.start()
-
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1300, 910)
@@ -534,27 +490,22 @@ class ClassificationUI(object):
         self.tabWidgetPages = QtWidgets.QTabWidget(self.centralWidget)
         self.tabWidgetPages.setGeometry(QtCore.QRect(20, 10, 480, 890))
         self.tabWidgetPages.setObjectName("tabWidgetPages")
-
         # RF_tab_page
         self.RF_tab_page = QtWidgets.QWidget()
         self.RF_tab_page.setObjectName("RF_tab_page")
         self.RF_tab_page_init()
         self.tabWidgetPages.addTab(self.RF_tab_page, "")
-
         # LGBM_tab_page
         self.LGB_tab_page = QtWidgets.QWidget()
         self.LGB_tab_page.setObjectName("LGB_tab_page")
         self.LightGBM_tab_page_init()
         self.tabWidgetPages.addTab(self.LGB_tab_page, "")
-
         #### ======================================== ========================================
-
         # XGB_tab_page
         self.XGB_tab_page = QtWidgets.QWidget()
         self.XGB_tab_page.setObjectName("XGB_tab_page")
         self.XGB_tab_page_init()
         self.tabWidgetPages.addTab(self.XGB_tab_page, "")
-
         # 设置日志界面
         self.log_group = QtWidgets.QGroupBox(self.centralWidget)
         self.log_group.setGeometry(QtCore.QRect(530, 10, 750, 890))
@@ -566,16 +517,12 @@ class ClassificationUI(object):
         self.SaveLogButton.setGeometry(QtCore.QRect(330, 855, 90, 30))
         self.SaveLogButton.setObjectName("SaveLogButton")
         self.SaveLogButton.clicked.connect(self.SaveLogButton_clicked)
-
         MainWindow.setCentralWidget(self.centralWidget)
-
         # 绑定tabWidgetPagesChanged
         self.tabWidgetPages.setCurrentIndex(0)
         self.tabWidgetPages.currentChanged.connect(self.tabWidgetPagesChanged)
-
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-
     def RF_tab_page_init(self):
         # ======================================== RF_get_samples_group ========================================
         self.RF_get_samples_group = QtWidgets.QGroupBox(self.RF_tab_page)
@@ -592,7 +539,6 @@ class ClassificationUI(object):
         self.select_RF_img_button.setGeometry(QtCore.QRect(350, 20, 100, 30))
         self.select_RF_img_button.setObjectName("select_RF_img_button")
         self.select_RF_img_button.clicked.connect(self.RF_select_image_pushbutton_clicked)
-
         self.RF_label_path_label = QtWidgets.QLabel(self.RF_get_samples_group)
         self.RF_label_path_label.setGeometry(QtCore.QRect(10, 60, 80, 30))
         self.RF_label_path_label.setObjectName("RF_label_path_label")
@@ -604,7 +550,6 @@ class ClassificationUI(object):
         self.select_RF_label_button.setGeometry(QtCore.QRect(350, 60, 100, 30))
         self.select_RF_label_button.setObjectName("select_RF_label_button")
         self.select_RF_label_button.clicked.connect(self.RF_select_label_pushbutton_clicked)
-
         self.RF_class_num_label = QtWidgets.QLabel(self.RF_get_samples_group)
         self.RF_class_num_label.setGeometry(QtCore.QRect(10, 100, 80, 30))
         self.RF_class_num_label.setObjectName("RF_class_num_label")
@@ -616,7 +561,6 @@ class ClassificationUI(object):
         self.select_RF_class_num_button.setGeometry(QtCore.QRect(350, 100, 100, 30))
         self.select_RF_class_num_button.setObjectName("select_RF_class_num_button")
         self.select_RF_class_num_button.clicked.connect(self.RF_select_numclass_path_pushButton_clicked)
-
         self.RF_output_samples_path_label = QtWidgets.QLabel(self.RF_get_samples_group)
         self.RF_output_samples_path_label.setGeometry(QtCore.QRect(10, 140, 80, 30))
         self.RF_output_samples_path_label.setObjectName("RF_output_samples_path_label")
@@ -630,18 +574,14 @@ class ClassificationUI(object):
         self.select_RF_output_samples_path_button.clicked.connect(
             self.RF_select_sample_path_pushButton_clicked
         )
-
         self.RF_get_samples_button = QtWidgets.QPushButton(self.RF_get_samples_group)
         self.RF_get_samples_button.setGeometry(QtCore.QRect(160, 180, 100, 30))
         self.RF_get_samples_button.setObjectName("get_RF_samples_button")
         self.RF_get_samples_button.clicked.connect(self.RF_get_sample_pushButton_clicked)
-
         # ======================================== RF_train_group ========================================
-
         self.RF_train_group = QtWidgets.QGroupBox(self.RF_tab_page)
         self.RF_train_group.setGeometry(QtCore.QRect(10, 240, 460, 320))
         self.RF_train_group.setObjectName("RF_train_group")
-
         # model save path
         self.RF_train_model_save_path_label = QtWidgets.QLabel(self.RF_train_group)
         self.RF_train_model_save_path_label.setGeometry(QtCore.QRect(10, 245, 90, 25))
@@ -656,20 +596,16 @@ class ClassificationUI(object):
         self.select_RF_train_model_save_path_button.clicked.connect(
             self.select_RF_train_Save_model_path_pushButton_clicked
         )
-
         self.RF_train_button = QtWidgets.QPushButton(self.RF_train_group)
         self.RF_train_button.setGeometry(QtCore.QRect(160, 280, 100, 30))
         self.RF_train_button.setObjectName("RF_train_button")
-
         self.RF_train_button.clicked.connect(self.RF_train_pushButton_clicked)
-
         self.RF_val_datasets_size_label = QtWidgets.QLabel(self.RF_train_group)
         self.RF_val_datasets_size_label.setGeometry(QtCore.QRect(10, 20, 100, 20))
         self.RF_val_datasets_size_label.setObjectName("RF_val_datasets_size_label")
         self.RF_val_datasets_size = QtWidgets.QLineEdit(self.RF_train_group)
         self.RF_val_datasets_size.setGeometry(QtCore.QRect(130, 20, 100, 20))
         self.RF_val_datasets_size.setObjectName("val_datasets_size")
-
         self.RF_n_estimators_label = QtWidgets.QLabel(self.RF_train_group)
         self.RF_n_estimators_label.setGeometry(QtCore.QRect(10, 65, 130, 20))
         self.RF_n_estimators_label.setObjectName("RF_n_estimators_label")
@@ -682,7 +618,6 @@ class ClassificationUI(object):
         self.RF_n_estimators_max = QtWidgets.QLineEdit(self.RF_train_group)
         self.RF_n_estimators_max.setGeometry(QtCore.QRect(250, 65, 80, 20))
         self.RF_n_estimators_max.setObjectName("RF_n_estimators_max")
-
         self.RF_Min_label = QtWidgets.QLabel(self.RF_train_group)
         self.RF_Min_label.setGeometry(QtCore.QRect(188, 45, 80, 20))
         self.RF_Min_label.setObjectName("Min_label")
@@ -692,7 +627,6 @@ class ClassificationUI(object):
         self.RF_Interval_label = QtWidgets.QLabel(self.RF_train_group)
         self.RF_Interval_label.setGeometry(QtCore.QRect(355, 45, 80, 20))
         self.RF_Interval_label.setObjectName("RF_Interval_label")
-
         self.RF_max_depth_min = QtWidgets.QLineEdit(self.RF_train_group)
         self.RF_max_depth_min.setGeometry(QtCore.QRect(160, 95, 80, 20))
         self.RF_max_depth_min.setObjectName("max_depth_min")
@@ -705,7 +639,6 @@ class ClassificationUI(object):
         self.RF_max_depth_label = QtWidgets.QLabel(self.RF_train_group)
         self.RF_max_depth_label.setGeometry(QtCore.QRect(10, 95, 140, 20))
         self.RF_max_depth_label.setObjectName("max_depth_label")
-
         self.RF_min_samples_leaf_min = QtWidgets.QLineEdit(self.RF_train_group)
         self.RF_min_samples_leaf_min.setGeometry(QtCore.QRect(160, 125, 80, 20))
         self.RF_min_samples_leaf_min.setObjectName("RF_min_samples_leaf_min")
@@ -718,7 +651,6 @@ class ClassificationUI(object):
         self.RF_min_samples_leaf_label = QtWidgets.QLabel(self.RF_train_group)
         self.RF_min_samples_leaf_label.setGeometry(QtCore.QRect(10, 125, 140, 20))
         self.RF_min_samples_leaf_label.setObjectName("RF_min_samples_leaf_label")
-
         self.RF_min_samples_split_min = QtWidgets.QLineEdit(self.RF_train_group)
         self.RF_min_samples_split_min.setGeometry(QtCore.QRect(160, 155, 80, 20))
         self.RF_min_samples_split_min.setObjectName("RF_min_samples_split_min")
@@ -731,50 +663,41 @@ class ClassificationUI(object):
         self.RF_min_samples_split_label = QtWidgets.QLabel(self.RF_train_group)
         self.RF_min_samples_split_label.setGeometry(QtCore.QRect(10, 155, 140, 20))
         self.RF_min_samples_split_label.setObjectName("min_samples_split_label")
-
         self.sqrt_cb = QtWidgets.QCheckBox(self.RF_train_group)
         self.sqrt_cb.setGeometry(QtCore.QRect(160, 185, 80, 20))
         self.sqrt_cb.setObjectName("sqrt_cb")
         # 选中
         self.sqrt_cb.setChecked(True)
-
         self.log2_cb = QtWidgets.QCheckBox(self.RF_train_group)
         self.log2_cb.setGeometry(QtCore.QRect(250, 185, 80, 20))
         self.log2_cb.setObjectName("log2_cb")
         # 选中
         self.log2_cb.setChecked(True)
-
         self.None_cb = QtWidgets.QCheckBox(self.RF_train_group)
         self.None_cb.setGeometry(QtCore.QRect(340, 185, 80, 20))
         self.None_cb.setObjectName("None_cb")
         # 选中
         self.None_cb.setChecked(True)
-
         self.RF_max_features_label = QtWidgets.QLabel(self.RF_train_group)
         self.RF_max_features_label.setGeometry(QtCore.QRect(10, 185, 140, 20))
         self.RF_max_features_label.setObjectName("max_features_label")
-
         self.False_cb = QtWidgets.QCheckBox(self.RF_train_group)
         self.False_cb.setGeometry(QtCore.QRect(250, 215, 90, 20))
         self.False_cb.setObjectName("False_cb")
         # 选中
         self.False_cb.setChecked(True)
-
         self.True_cb = QtWidgets.QCheckBox(self.RF_train_group)
         self.True_cb.setGeometry(QtCore.QRect(160, 215, 90, 20))
         self.True_cb.setObjectName("True_cb")
         # 选中
         self.True_cb.setChecked(True)
-
         self.bootstrap_label = QtWidgets.QLabel(self.RF_train_group)
         self.bootstrap_label.setGeometry(QtCore.QRect(10, 215, 130, 20))
         self.bootstrap_label.setObjectName("bootstrap_label")
-
         # ======================================== RF_predict_group ========================================
         self.RF_predict_group = QtWidgets.QGroupBox(self.RF_tab_page)
         self.RF_predict_group.setGeometry(QtCore.QRect(10, 580, 460, 260))
         self.RF_predict_group.setObjectName("RF_predict_group")
-
         self.RF_model_path_label = QtWidgets.QLabel(self.RF_predict_group)
         self.RF_model_path_label.setGeometry(QtCore.QRect(10, 40, 80, 30))
         self.RF_model_path_label.setObjectName("RF_model_path_label")
@@ -786,7 +709,6 @@ class ClassificationUI(object):
         self.select_RF_model_path_button.setGeometry(QtCore.QRect(350, 40, 100, 30))
         self.select_RF_model_path_button.setObjectName("select_RF_model_path_button")
         self.select_RF_model_path_button.clicked.connect(self.select_RF_model_path_pushButton_clicked)
-
         self.RF_img_predict_path_label = QtWidgets.QLabel(self.RF_predict_group)
         self.RF_img_predict_path_label.setGeometry(QtCore.QRect(10, 80, 80, 30))
         self.RF_img_predict_path_label.setObjectName("RF_img_predict_path_label")
@@ -800,7 +722,6 @@ class ClassificationUI(object):
         self.select_RF_img_predict_path_button.clicked.connect(
             self.select_RF_img_predict_path_pushButton_clicked
         )
-
         self.RF_class_num_label_2 = QtWidgets.QLabel(self.RF_predict_group)
         self.RF_class_num_label_2.setGeometry(QtCore.QRect(10, 120, 80, 30))
         self.RF_class_num_label_2.setObjectName("RF_class_num_label_2")
@@ -812,7 +733,6 @@ class ClassificationUI(object):
         self.select_RF_class_num_button_2.setGeometry(QtCore.QRect(350, 120, 100, 30))
         self.select_RF_class_num_button_2.setObjectName("select_RF_class_num_button_2")
         self.select_RF_class_num_button_2.clicked.connect(self.select_RF_class_num_pushButton_clicked)
-
         self.RF_predict_output_result_path_label = QtWidgets.QLabel(self.RF_predict_group)
         self.RF_predict_output_result_path_label.setGeometry(QtCore.QRect(10, 160, 80, 30))
         self.RF_predict_output_result_path_label.setObjectName("RF_predict_output_result_path_label")
@@ -828,12 +748,10 @@ class ClassificationUI(object):
         self.RF_select_predict_result_output_path_button.clicked.connect(
             self.select_RF_predict_result_output_path_pushButton_clicked
         )
-
         self.RF_predict_button = QtWidgets.QPushButton(self.RF_predict_group)
         self.RF_predict_button.setGeometry(QtCore.QRect(160, 200, 100, 30))
         self.RF_predict_button.setObjectName("RF_predict_button")
         self.RF_predict_button.clicked.connect(self.RF_predict_pushButton_clicked)
-
     def LightGBM_tab_page_init(self):
         # ======================================== LGB_get_samples_group ========================================
         self.LGB_get_samples_group = QtWidgets.QGroupBox(self.LGB_tab_page)
@@ -850,7 +768,6 @@ class ClassificationUI(object):
         self.select_LGB_img_button.setGeometry(QtCore.QRect(350, 20, 100, 30))
         self.select_LGB_img_button.setObjectName("select_LGB_img_button")
         self.select_LGB_img_button.clicked.connect(self.LGB_select_image_pushbutton_clicked)
-
         self.LGB_label_path_label = QtWidgets.QLabel(self.LGB_get_samples_group)
         self.LGB_label_path_label.setGeometry(QtCore.QRect(10, 60, 80, 30))
         self.LGB_label_path_label.setObjectName("LGB_label_path_label")
@@ -862,7 +779,6 @@ class ClassificationUI(object):
         self.select_LGB_lable_button.setGeometry(QtCore.QRect(350, 60, 100, 30))
         self.select_LGB_lable_button.setObjectName("LGB_label_path_label")
         self.select_LGB_lable_button.clicked.connect(self.LGB_select_label_pushbutton_clicked)
-
         self.LGB_class_num_label = QtWidgets.QLabel(self.LGB_get_samples_group)
         self.LGB_class_num_label.setGeometry(QtCore.QRect(10, 100, 80, 30))
         self.LGB_class_num_label.setObjectName("LGB_class_num_label")
@@ -874,7 +790,6 @@ class ClassificationUI(object):
         self.select_LGB_class_num_button.setGeometry(QtCore.QRect(350, 100, 100, 30))
         self.select_LGB_class_num_button.setObjectName("select_LGB_class_num_button")
         self.select_LGB_class_num_button.clicked.connect(self.LGB_select_numclass_path_pushbutton_clicked)
-
         self.LGB_output_samples_path_label = QtWidgets.QLabel(self.LGB_get_samples_group)
         self.LGB_output_samples_path_label.setGeometry(QtCore.QRect(10, 140, 80, 30))
         self.LGB_output_samples_path_label.setObjectName("LGB_output_samples_path_label")
@@ -888,18 +803,14 @@ class ClassificationUI(object):
         self.select_LGB_output_samples_path_button.clicked.connect(
             self.LGB_select_sample_path_pushbutton_clicked
         )
-
         self.LGB_get_samples_button = QtWidgets.QPushButton(self.LGB_get_samples_group)
         self.LGB_get_samples_button.setGeometry(QtCore.QRect(160, 180, 100, 30))
         self.LGB_get_samples_button.setObjectName("get_LGB_samples_button")
         self.LGB_get_samples_button.clicked.connect(self.LGB_get_sample_pushButton_clicked)
-
         # ======================================== LGB_train_group ========================================
-
         self.LGB_train_group = QtWidgets.QGroupBox(self.LGB_tab_page)
         self.LGB_train_group.setGeometry(QtCore.QRect(10, 235, 460, 400))
         self.LGB_train_group.setObjectName("LGB_train_group")
-
         # model save path
         self.LGB_train_model_save_path_label = QtWidgets.QLabel(self.LGB_train_group)
         self.LGB_train_model_save_path_label.setGeometry(QtCore.QRect(10, 326, 90, 25))
@@ -918,7 +829,6 @@ class ClassificationUI(object):
         self.LGB_train_button.setGeometry(QtCore.QRect(160, 360, 100, 30))
         self.LGB_train_button.setObjectName("LGB_train_button")
         self.LGB_train_button.clicked.connect(self.LGB_train_pushButton_clicked)
-
         # 训练的参数设置
         # 训练参数比例
         self.LGB_val_datasets_size_label = QtWidgets.QLabel(self.LGB_train_group)
@@ -927,7 +837,6 @@ class ClassificationUI(object):
         self.LGB_val_datasets_size = QtWidgets.QLineEdit(self.LGB_train_group)
         self.LGB_val_datasets_size.setGeometry(QtCore.QRect(130, 30, 100, 20))
         self.LGB_val_datasets_size.setObjectName("val_datasets_size")
-
         self.LGB_Min_label = QtWidgets.QLabel(self.LGB_train_group)
         self.LGB_Min_label.setGeometry(QtCore.QRect(188, 55, 80, 20))
         self.LGB_Min_label.setObjectName("LGB_Min_label")
@@ -937,7 +846,6 @@ class ClassificationUI(object):
         self.LGB_Interval_label = QtWidgets.QLabel(self.LGB_train_group)
         self.LGB_Interval_label.setGeometry(QtCore.QRect(355, 55, 80, 20))
         self.LGB_Interval_label.setObjectName("LGB_Interval_label")
-
         self.LGB_n_estimators_min = QtWidgets.QLineEdit(self.LGB_train_group)
         self.LGB_n_estimators_min.setGeometry(QtCore.QRect(160, 75, 80, 20))
         self.LGB_n_estimators_min.setObjectName("LGB_n_estimators_min")
@@ -950,7 +858,6 @@ class ClassificationUI(object):
         self.LGB_n_estimators_label = QtWidgets.QLabel(self.LGB_train_group)
         self.LGB_n_estimators_label.setGeometry(QtCore.QRect(10, 75, 130, 20))
         self.LGB_n_estimators_label.setObjectName("LGB_n_estimators_label")
-
         self.LGB_max_depth_min = QtWidgets.QLineEdit(self.LGB_train_group)
         self.LGB_max_depth_min.setGeometry(QtCore.QRect(160, 105, 80, 20))
         self.LGB_max_depth_min.setObjectName("max_depth_min")
@@ -963,7 +870,6 @@ class ClassificationUI(object):
         self.LGB_max_depth_label = QtWidgets.QLabel(self.LGB_train_group)
         self.LGB_max_depth_label.setGeometry(QtCore.QRect(10, 105, 140, 20))
         self.LGB_max_depth_label.setObjectName("max_depth_label")
-
         self.LGB_learning_rate_min = QtWidgets.QLineEdit(self.LGB_train_group)
         self.LGB_learning_rate_min.setGeometry(QtCore.QRect(160, 135, 80, 20))
         self.LGB_learning_rate_min.setObjectName("learning_rate_min")
@@ -976,7 +882,6 @@ class ClassificationUI(object):
         self.LGB_learning_rate_label = QtWidgets.QLabel(self.LGB_train_group)
         self.LGB_learning_rate_label.setGeometry(QtCore.QRect(10, 135, 140, 20))
         self.LGB_learning_rate_label.setObjectName("learning_rate_label")
-
         self.LGB_subsample_min = QtWidgets.QLineEdit(self.LGB_train_group)
         self.LGB_subsample_min.setGeometry(QtCore.QRect(160, 165, 80, 20))
         self.LGB_subsample_min.setObjectName("subsample_min")
@@ -989,7 +894,6 @@ class ClassificationUI(object):
         self.LGB_subsample_label = QtWidgets.QLabel(self.LGB_train_group)
         self.LGB_subsample_label.setGeometry(QtCore.QRect(10, 165, 140, 20))
         self.LGB_subsample_label.setObjectName("LGB_subsample_label")
-
         self.LGB_colsample_bytree_min = QtWidgets.QLineEdit(self.LGB_train_group)
         self.LGB_colsample_bytree_min.setGeometry(QtCore.QRect(160, 195, 80, 20))
         self.LGB_colsample_bytree_min.setObjectName("LGB_colsample_bytree_min")
@@ -1002,7 +906,6 @@ class ClassificationUI(object):
         self.LGB_colsample_bytree_label = QtWidgets.QLabel(self.LGB_train_group)
         self.LGB_colsample_bytree_label.setGeometry(QtCore.QRect(10, 195, 140, 20))
         self.LGB_colsample_bytree_label.setObjectName("LGB_colsample_bytree_label")
-
         self.LGB_reg_alpha_min = QtWidgets.QLineEdit(self.LGB_train_group)
         self.LGB_reg_alpha_min.setGeometry(QtCore.QRect(160, 225, 80, 20))
         self.LGB_reg_alpha_min.setObjectName("LGB_reg_alpha_min")
@@ -1015,7 +918,6 @@ class ClassificationUI(object):
         self.LGB_reg_alpha_label = QtWidgets.QLabel(self.LGB_train_group)
         self.LGB_reg_alpha_label.setGeometry(QtCore.QRect(10, 225, 140, 20))
         self.LGB_reg_alpha_label.setObjectName("LGB_reg_alpha_label")
-
         self.LGB_reg_lambda_min = QtWidgets.QLineEdit(self.LGB_train_group)
         self.LGB_reg_lambda_min.setGeometry(QtCore.QRect(160, 255, 80, 20))
         self.LGB_reg_lambda_min.setObjectName("LGB_reg_lambda_min")
@@ -1028,7 +930,6 @@ class ClassificationUI(object):
         self.LGB_reg_lambda_label = QtWidgets.QLabel(self.LGB_train_group)
         self.LGB_reg_lambda_label.setGeometry(QtCore.QRect(10, 255, 140, 20))
         self.LGB_reg_lambda_label.setObjectName("LGB_reg_lambda_label")
-
         self.LGB_min_child_weight_min = QtWidgets.QLineEdit(self.LGB_train_group)
         self.LGB_min_child_weight_min.setGeometry(QtCore.QRect(160, 285, 80, 20))
         self.LGB_min_child_weight_min.setObjectName("LGB_min_child_weight_min")
@@ -1041,7 +942,6 @@ class ClassificationUI(object):
         self.LGB_min_child_weight_label = QtWidgets.QLabel(self.LGB_train_group)
         self.LGB_min_child_weight_label.setGeometry(QtCore.QRect(10, 285, 140, 20))
         self.LGB_min_child_weight_label.setObjectName("LGB_min_child_weight_label")
-
         # ======================================== LGB_predict_group ========================================
         self.LGB_predict_group = QtWidgets.QGroupBox(self.LGB_tab_page)
         self.LGB_predict_group.setGeometry(QtCore.QRect(10, 640, 460, 220))
@@ -1100,12 +1000,10 @@ class ClassificationUI(object):
         self.select_LGB_class_num_button_2.setGeometry(QtCore.QRect(350, 100, 100, 30))
         self.select_LGB_class_num_button_2.setObjectName("select_LGB_class_num_button_2")
         self.select_LGB_class_num_button_2.clicked.connect(self.select_LGB_class_num_button_2_clicked)
-
         self.LGB_predict_button = QtWidgets.QPushButton(self.LGB_predict_group)
         self.LGB_predict_button.setGeometry(QtCore.QRect(160, 180, 100, 30))
         self.LGB_predict_button.setObjectName("LGB_predict_button")
         self.LGB_predict_button.clicked.connect(self.LGB_predict_pushButton_clicked)
-
     def XGB_tab_page_init(self):
         # ======================================== XGB_get_samples_group ========================================
         self.XGB_get_samples_group = QtWidgets.QGroupBox(self.XGB_tab_page)
@@ -1122,7 +1020,6 @@ class ClassificationUI(object):
         self.select_XGB_img_button.setGeometry(QtCore.QRect(350, 20, 100, 30))
         self.select_XGB_img_button.setObjectName("select_XGB_img_button")
         self.select_XGB_img_button.clicked.connect(self.XGB_select_image_pushbutton_clicked)
-
         self.XGB_label_path_label = QtWidgets.QLabel(self.XGB_get_samples_group)
         self.XGB_label_path_label.setGeometry(QtCore.QRect(10, 60, 80, 30))
         self.XGB_label_path_label.setObjectName("XGB_label_path_label")
@@ -1134,7 +1031,6 @@ class ClassificationUI(object):
         self.XGB_label_path.setGeometry(QtCore.QRect(90, 64, 235, 22))
         self.XGB_label_path.setObjectName("XGB_label_path")
         self.XGB_label_path.setReadOnly(True)
-
         self.XGB_class_num_label = QtWidgets.QLabel(self.XGB_get_samples_group)
         self.XGB_class_num_label.setGeometry(QtCore.QRect(10, 100, 80, 30))
         self.XGB_class_num_label.setObjectName("XGB_class_num_label")
@@ -1149,7 +1045,6 @@ class ClassificationUI(object):
         self.XGB_output_samples_path_label = QtWidgets.QLabel(self.XGB_get_samples_group)
         self.XGB_output_samples_path_label.setGeometry(QtCore.QRect(10, 140, 80, 30))
         self.XGB_output_samples_path_label.setObjectName("XGB_output_samples_path_label")
-
         self.XGB_output_samples_path = QtWidgets.QLineEdit(self.XGB_get_samples_group)
         self.XGB_output_samples_path.setGeometry(QtCore.QRect(90, 144, 235, 22))
         self.XGB_output_samples_path.setObjectName("XGB_output_samples_path")
@@ -1164,13 +1059,10 @@ class ClassificationUI(object):
         self.XGB_get_samples_button.setGeometry(QtCore.QRect(160, 175, 100, 30))
         self.XGB_get_samples_button.setObjectName("get_XGB_samples_button")
         self.XGB_get_samples_button.clicked.connect(self.XGB_get_sample_pushButton_clicked)
-
         # ======================================== XGB_train_group ========================================
-
         self.XGB_train_group = QtWidgets.QGroupBox(self.XGB_tab_page)
         self.XGB_train_group.setGeometry(QtCore.QRect(10, 230, 460, 401))
         self.XGB_train_group.setObjectName("XGB_train_group")
-
         # model save path
         self.XGB_train_model_save_path_label = QtWidgets.QLabel(self.XGB_train_group)
         self.XGB_train_model_save_path_label.setGeometry(QtCore.QRect(10, 336, 90, 25))
@@ -1189,7 +1081,6 @@ class ClassificationUI(object):
         self.XGB_train_button.setGeometry(QtCore.QRect(160, 366, 100, 30))
         self.XGB_train_button.setObjectName("XGB_train_button")
         self.XGB_train_button.clicked.connect(self.XGB_train_pushButton_clicked)
-
         # 训练的参数设置
         # 训练参数比例
         self.XGB_val_datasets_size_label = QtWidgets.QLabel(self.XGB_train_group)
@@ -1198,7 +1089,6 @@ class ClassificationUI(object):
         self.XGB_val_datasets_size = QtWidgets.QLineEdit(self.XGB_train_group)
         self.XGB_val_datasets_size.setGeometry(QtCore.QRect(130, 20, 100, 20))
         self.XGB_val_datasets_size.setObjectName("val_datasets_size")
-
         self.XGB_Min_label = QtWidgets.QLabel(self.XGB_train_group)
         self.XGB_Min_label.setGeometry(QtCore.QRect(188, 45, 80, 20))
         self.XGB_Min_label.setObjectName("XGB_Min_label")
@@ -1208,7 +1098,6 @@ class ClassificationUI(object):
         self.XGB_Interval_label = QtWidgets.QLabel(self.XGB_train_group)
         self.XGB_Interval_label.setGeometry(QtCore.QRect(355, 45, 80, 20))
         self.XGB_Interval_label.setObjectName("XGB_Interval_label")
-
         self.XGB_n_estimators_min = QtWidgets.QLineEdit(self.XGB_train_group)
         self.XGB_n_estimators_min.setGeometry(QtCore.QRect(160, 65, 80, 20))
         self.XGB_n_estimators_min.setObjectName("XGB_n_estimators_min")
@@ -1221,7 +1110,6 @@ class ClassificationUI(object):
         self.XGB_n_estimators_label = QtWidgets.QLabel(self.XGB_train_group)
         self.XGB_n_estimators_label.setGeometry(QtCore.QRect(10, 65, 130, 20))
         self.XGB_n_estimators_label.setObjectName("XGB_n_estimators_label")
-
         self.XGB_max_depth_min = QtWidgets.QLineEdit(self.XGB_train_group)
         self.XGB_max_depth_min.setGeometry(QtCore.QRect(160, 95, 80, 20))
         self.XGB_max_depth_min.setObjectName("max_depth_min")
@@ -1234,7 +1122,6 @@ class ClassificationUI(object):
         self.XGB_max_depth_label = QtWidgets.QLabel(self.XGB_train_group)
         self.XGB_max_depth_label.setGeometry(QtCore.QRect(10, 95, 140, 20))
         self.XGB_max_depth_label.setObjectName("max_depth_label")
-
         self.XGB_learning_rate_min = QtWidgets.QLineEdit(self.XGB_train_group)
         self.XGB_learning_rate_min.setGeometry(QtCore.QRect(160, 125, 80, 20))
         self.XGB_learning_rate_min.setObjectName("learning_rate_min")
@@ -1247,7 +1134,6 @@ class ClassificationUI(object):
         self.XGB_learning_rate_label = QtWidgets.QLabel(self.XGB_train_group)
         self.XGB_learning_rate_label.setGeometry(QtCore.QRect(10, 125, 140, 20))
         self.XGB_learning_rate_label.setObjectName("learning_rate_label")
-
         self.XGB_subsample_min = QtWidgets.QLineEdit(self.XGB_train_group)
         self.XGB_subsample_min.setGeometry(QtCore.QRect(160, 155, 80, 20))
         self.XGB_subsample_min.setObjectName("subsample_min")
@@ -1260,7 +1146,6 @@ class ClassificationUI(object):
         self.XGB_subsample_label = QtWidgets.QLabel(self.XGB_train_group)
         self.XGB_subsample_label.setGeometry(QtCore.QRect(10, 155, 140, 20))
         self.XGB_subsample_label.setObjectName("XGB_subsample_label")
-
         self.XGB_colsample_bytree_min = QtWidgets.QLineEdit(self.XGB_train_group)
         self.XGB_colsample_bytree_min.setGeometry(QtCore.QRect(160, 185, 80, 20))
         self.XGB_colsample_bytree_min.setObjectName("XGB_colsample_bytree_min")
@@ -1273,7 +1158,6 @@ class ClassificationUI(object):
         self.XGB_colsample_bytree_label = QtWidgets.QLabel(self.XGB_train_group)
         self.XGB_colsample_bytree_label.setGeometry(QtCore.QRect(10, 185, 140, 20))
         self.XGB_colsample_bytree_label.setObjectName("XGB_colsample_bytree_label")
-
         self.XGB_gamma_min = QtWidgets.QLineEdit(self.XGB_train_group)
         self.XGB_gamma_min.setGeometry(QtCore.QRect(160, 215, 80, 20))
         self.XGB_gamma_min.setObjectName("XGB_gamma_min")
@@ -1286,7 +1170,6 @@ class ClassificationUI(object):
         self.XGB_gamma_label = QtWidgets.QLabel(self.XGB_train_group)
         self.XGB_gamma_label.setGeometry(QtCore.QRect(10, 215, 140, 20))
         self.XGB_gamma_label.setObjectName("XGB_gamma_label")
-
         self.XGB_reg_alpha_min = QtWidgets.QLineEdit(self.XGB_train_group)
         self.XGB_reg_alpha_min.setGeometry(QtCore.QRect(160, 245, 80, 20))
         self.XGB_reg_alpha_min.setObjectName("XGB_reg_alpha_min")
@@ -1299,7 +1182,6 @@ class ClassificationUI(object):
         self.XGB_reg_alpha_label = QtWidgets.QLabel(self.XGB_train_group)
         self.XGB_reg_alpha_label.setGeometry(QtCore.QRect(10, 245, 140, 20))
         self.XGB_reg_alpha_label.setObjectName("XGB_reg_alpha_label")
-
         self.XGB_reg_lambda_min = QtWidgets.QLineEdit(self.XGB_train_group)
         self.XGB_reg_lambda_min.setGeometry(QtCore.QRect(160, 275, 80, 20))
         self.XGB_reg_lambda_min.setObjectName("XGB_reg_lambda_min")
@@ -1312,7 +1194,6 @@ class ClassificationUI(object):
         self.XGB_reg_lambda_label = QtWidgets.QLabel(self.XGB_train_group)
         self.XGB_reg_lambda_label.setGeometry(QtCore.QRect(10, 275, 140, 20))
         self.XGB_reg_lambda_label.setObjectName("XGB_reg_lambda_label")
-
         self.XGB_min_child_weight_min = QtWidgets.QLineEdit(self.XGB_train_group)
         self.XGB_min_child_weight_min.setGeometry(QtCore.QRect(160, 305, 80, 20))
         self.XGB_min_child_weight_min.setObjectName("XGB_min_child_weight_min")
@@ -1325,12 +1206,10 @@ class ClassificationUI(object):
         self.XGB_min_child_weight_label = QtWidgets.QLabel(self.XGB_train_group)
         self.XGB_min_child_weight_label.setGeometry(QtCore.QRect(10, 305, 140, 20))
         self.XGB_min_child_weight_label.setObjectName("XGB_min_child_weight_label")
-
         # ======================================== XGB_predict_group ========================================
         self.XGB_predict_group = QtWidgets.QGroupBox(self.XGB_tab_page)
         self.XGB_predict_group.setGeometry(QtCore.QRect(10, 640, 460, 220))
         self.XGB_predict_group.setObjectName("XGB_predict_group")
-
         self.XGB_model_path_label = QtWidgets.QLabel(self.XGB_predict_group)
         self.XGB_model_path_label.setGeometry(QtCore.QRect(10, 20, 80, 30))
         self.XGB_model_path_label.setObjectName("XGB_model_path_label")
@@ -1342,7 +1221,6 @@ class ClassificationUI(object):
         self.select_XGB_model_path_button.setGeometry(QtCore.QRect(350, 20, 100, 30))
         self.select_XGB_model_path_button.setObjectName("select_XGB_model_path_button")
         self.select_XGB_model_path_button.clicked.connect(self.select_XGB_model_path_pushButton_clicked)
-
         self.XGB_predict_output_result_path_label = QtWidgets.QLabel(self.XGB_predict_group)
         self.XGB_predict_output_result_path_label.setGeometry(QtCore.QRect(10, 140, 80, 30))
         self.XGB_predict_output_result_path_label.setObjectName("XGB_predict_output_result_path_label")
@@ -1358,7 +1236,6 @@ class ClassificationUI(object):
         self.XGB_select_predict_result_output_path_button.clicked.connect(
             self.XGB_select_predict_result_output_path_pushButton_clicked
         )
-
         self.XGB_img_predict_path_label = QtWidgets.QLabel(self.XGB_predict_group)
         self.XGB_img_predict_path_label.setGeometry(QtCore.QRect(10, 60, 80, 30))
         self.XGB_img_predict_path_label.setObjectName("XGB_img_predict_path_label")
@@ -1372,7 +1249,6 @@ class ClassificationUI(object):
         self.select_XGB_img_predict_path_button.clicked.connect(
             self.select_XGB_img_predict_path_pushButton_clicked
         )
-
         self.XGB_class_num_label_2 = QtWidgets.QLabel(self.XGB_predict_group)
         self.XGB_class_num_label_2.setGeometry(QtCore.QRect(10, 100, 80, 30))
         self.XGB_class_num_label_2.setObjectName("XGB_class_num_label_2")
@@ -1384,16 +1260,13 @@ class ClassificationUI(object):
         self.select_XGB_class_num_button_2.setGeometry(QtCore.QRect(350, 100, 100, 30))
         self.select_XGB_class_num_button_2.setObjectName("select_XGB_class_num_button_2")
         self.select_XGB_class_num_button_2.clicked.connect(self.select_XGB_class_num_button_2_clicked)
-
         self.XGB_predict_button = QtWidgets.QPushButton(self.XGB_predict_group)
         self.XGB_predict_button.setGeometry(QtCore.QRect(160, 180, 100, 30))
         self.XGB_predict_button.setObjectName("XGB_predict_button")
         self.XGB_predict_button.clicked.connect(self.XGB_predict_pushButton_clicked)
-
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "遥感影像机器学习地物分类工具箱"))
-
         # RF_tab_page
         self.tabWidgetPages.setTabText(
             self.tabWidgetPages.indexOf(self.RF_tab_page), _translate("MainWindow", "随机森林算法")
@@ -1438,10 +1311,8 @@ class ClassificationUI(object):
         self.True_cb.setText(_translate("MainWindow", "True"))
         self.bootstrap_label.setText(_translate("MainWindow", "bootstrap:"))
         self.False_cb.setText(_translate("MainWindow", "False"))
-
         self.RF_train_model_save_path_label.setText(_translate("MainWindow", "模型保存路径:"))
         self.select_RF_train_model_save_path_button.setText(_translate("MainWindow", "选择路径"))
-
         self.RF_predict_group.setTitle(_translate("MainWindow", "预测参数"))
         self.select_RF_img_predict_path_button.setText(_translate("MainWindow", "选择路径"))
         self.RF_select_predict_result_output_path_button.setText(_translate("MainWindow", "选择路径"))
@@ -1452,7 +1323,6 @@ class ClassificationUI(object):
         self.select_RF_model_path_button.setText(_translate("MainWindow", "选择路径"))
         self.RF_predict_button.setText(_translate("MainWindow", "预测"))
         self.RF_predict_output_result_path_label.setText(_translate("MainWindow", "输出路径:"))
-
         # XGB_tab_page
         self.tabWidgetPages.setTabText(
             self.tabWidgetPages.indexOf(self.XGB_tab_page), _translate("MainWindow", "XGBoost算法")
@@ -1512,7 +1382,6 @@ class ClassificationUI(object):
         self.XGB_min_child_weight_max.setText(_translate("MainWindow", "10"))
         self.XGB_train_model_save_path_label.setText(_translate("MainWindow", "模型保存路径:"))
         self.select_XGB_train_model_save_path_button.setText(_translate("MainWindow", "选择路径"))
-
         self.XGB_predict_group.setTitle(_translate("MainWindow", "预测参数"))
         self.select_XGB_img_predict_path_button.setText(_translate("MainWindow", "选择路径"))
         self.XGB_select_predict_result_output_path_button.setText(_translate("MainWindow", "选择路径"))
@@ -1523,7 +1392,6 @@ class ClassificationUI(object):
         self.select_XGB_model_path_button.setText(_translate("MainWindow", "选择路径"))
         self.XGB_predict_button.setText(_translate("MainWindow", "预测"))
         self.XGB_predict_output_result_path_label.setText(_translate("MainWindow", "输出路径:"))
-
         # LGB_tab_page
         self.tabWidgetPages.setTabText(
             self.tabWidgetPages.indexOf(self.LGB_tab_page), _translate("MainWindow", "LightGBM算法")
@@ -1579,7 +1447,6 @@ class ClassificationUI(object):
         self.LGB_min_child_weight_max.setText(_translate("MainWindow", "10"))
         self.LGB_train_model_save_path_label.setText(_translate("MainWindow", "模型保存路径:"))
         self.select_LGB_train_model_save_path_button.setText(_translate("MainWindow", "选择路径"))
-
         self.LGB_predict_group.setTitle(_translate("MainWindow", "预测参数"))
         self.select_LGB_img_predict_path_button.setText(_translate("MainWindow", "选择路径"))
         self.LGB_select_predict_result_output_path_button.setText(_translate("MainWindow", "选择路径"))
@@ -1590,13 +1457,11 @@ class ClassificationUI(object):
         self.select_LGB_model_path_button.setText(_translate("MainWindow", "选择路径"))
         self.LGB_predict_button.setText(_translate("MainWindow", "预测"))
         self.LGB_predict_output_result_path_label.setText(_translate("MainWindow", "输出路径:"))
-
         self.log_group.setTitle(_translate("MainWindow", "日志"))
         self.SaveLogButton.setText(_translate("MainWindow", "保存日志"))
         # 初始化log_text_browser内容为
         self.log_text_browser.append("*" * 20 + " 欢迎使用遥感影像机器学习地物分类工具箱 " + "*" * 20)
         self.log_text_browser.append("*" * 20 + " 当前页面为:随机森林 " + "*" * 20)
-
     def tabWidgetPagesChanged(self, index):
         if index == 0:
             self.log_text_browser.append("*" * 20 + " 当前页面为:随机森林 " + "*" * 20)

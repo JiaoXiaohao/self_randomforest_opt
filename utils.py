@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 # File name: utils.py
+# description: 工具函数
 # 设置全局变量
 import os
 os.environ["LOKY_MAX_CPU_COUNT"] = "4"

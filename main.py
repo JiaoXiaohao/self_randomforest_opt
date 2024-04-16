@@ -3,6 +3,7 @@
 # description: 主程序入口
 import sys
 import os
+
 if __name__ == "__main__":
     try:
         from PyQt5 import QtCore, QtGui, QtWidgets
@@ -19,11 +20,15 @@ if __name__ == "__main__":
         # 重新导入
         from PyQt5 import QtCore, QtGui, QtWidgets
         from __UI__ import ClassificationUI
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = ClassificationUI()
-    ui.setupUi(MainWindow)
-    # 设置图标
-    MainWindow.setWindowIcon(QtGui.QIcon("icon.png"))
-    MainWindow.show()
-    sys.exit(app.exec_())
+    try:
+        app = QtWidgets.QApplication(sys.argv)
+        MainWindow = QtWidgets.QMainWindow()
+        ui = ClassificationUI()
+        ui.setupUi(MainWindow)
+        # 设置图标
+        MainWindow.setWindowIcon(QtGui.QIcon("icon.png"))
+        MainWindow.show()
+        sys.exit(app.exec_())
+    except Exception as e:
+        print(e)
+        os.system("pause")

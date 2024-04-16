@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+# File Name：classes.py
+# description: 线程类
 from utils import *
 from train import RF_train, XGB_train, LightGBM_train
 from predict import RF_Predict, XGB_Predict, LightGBM_Predict
