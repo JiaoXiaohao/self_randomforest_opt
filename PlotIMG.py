@@ -2,7 +2,6 @@ from osgeo import gdal
 import os
 import matplotlib.pyplot as plt
 import numpy as np
-
 IMGPATH = "data/img.tif"
 data = gdal.Open(IMGPATH)
 dataArray = data.ReadAsArray()

@@ -1,10 +1,9 @@
 from utils import *
-from LightGBM_train import LightGBM_train
-from XGB_train import XGB_train
-from RF_train import RF_train
+from train import RF_train, XGB_train, LightGBM_train
 from RF_predict import RF_Predict
 from XGB_predict import XGB_Predict
 from LightGBM_predict import LightGBM_Predict
+
 
 # 获取样本数据的线程
 class GetSamplesFThread(QtCore.QThread):
@@ -82,27 +81,10 @@ class Predict(QtCore.QThread):
     def run(self):
         try:
             if self.model == "RandomForest":
-                RF_Predict(
-                    self.RF_model_path, 
-                    self.img_path, 
-                    self.save_path, 
-                    self.class_path, 
-                    self.msg)
+                RF_Predict(self.RF_model_path, self.img_path, self.save_path, self.class_path, self.msg)
             elif self.model == "XGBoost":
-                XGB_Predict(
-                    self.RF_model_path,
-                    self.img_path,
-                    self.save_path,
-                    self.class_path,
-                    self.msg
-                )
+                XGB_Predict(self.RF_model_path, self.img_path, self.save_path, self.class_path, self.msg)
             elif self.model == "LightGBM":
-                LightGBM_Predict(
-                    self.RF_model_path,
-                    self.img_path,
-                    self.save_path,
-                    self.class_path,
-                    self.msg
-                )
+                LightGBM_Predict(self.RF_model_path, self.img_path, self.save_path, self.class_path, self.msg)
         except Exception as e:
             self.error.emit(str(e))

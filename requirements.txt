@@ -1,0 +1,12 @@
+GDAL==3.4.3
+hyperopt==0.2.7
+lightgbm==4.3.0
+matplotlib==3.8.0
+numpy==1.26.4
+pandas==2.1.4
+PyQt5==5.15.10
+PyQt5_sip==12.13.0
+SciencePlots==2.1.1
+scikit_learn==1.2.2
+seaborn==0.12.2
+xgboost==2.0.3
