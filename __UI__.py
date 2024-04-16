@@ -12,7 +12,6 @@ from classes import *
 class ClassificationUI(object):
     def ThreadLog(self, msg):
         self.log_text_browser.append(msg)
-
     def SaveLogButton_clicked(self):
         # 获取当前text browser的文本
 
@@ -21,12 +20,13 @@ class ClassificationUI(object):
             # 获取当前text browser的文本
             text = self.log_text_browser.toPlainText()
             # 新建文件的输出路径文件名
-            out_path, _ = QtWidgets.QFileDialog.getSaveFileName(None, "Save File", "", "Text Files(*.txt)")
+            out_path, _ = QtWidgets.QFileDialog.getSaveFileName(
+                None, "Save File", "", "Text Files(*.txt)"
+            )
             open(out_path, "w").write(text)
             QtWidgets.QMessageBox.information(None, "成功", "成功保存日志文件!", QtWidgets.QMessageBox.Ok)
         except Exception as e:
             QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
-
     def get_page_space(self):
         if self.tabWidgetPages.currentIndex() == 0:
             space = {
@@ -163,7 +163,7 @@ class ClassificationUI(object):
                 "max_depth": hp.choice(
                     "max_depth",
                     range(
-                        int(self.XGB_max_depth_min.text()),
+                        int( self.XGB_max_depth_min.text()),
                         int(self.XGB_max_depth_max.text()),
                         int(self.XGB_max_depth_interval.text()),
                     ),
@@ -425,7 +425,6 @@ class ClassificationUI(object):
         self.predictThread.error.connect(self.ThreadLog)
         self.predictThread.msg.connect(self.ThreadLog)
         self.predictThread.start()
-
     # LGB数据获取部分的按钮点击链接
     def LGB_select_image_pushbutton_clicked(self):
         selectImgPath(self.LGB_img_path, self.log_text_browser)
@@ -447,7 +446,7 @@ class ClassificationUI(object):
 
     def select_LGB_class_num_button_2_clicked(self):
         selectNumClassPath(self.LGB_class_num_path_2, self.log_text_browser)
-
+    
     def LGB_select_predict_result_output_path_pushbutton_clicked(self):
         selectSaveImgPath(self.LGB_output_predict_result_path, self.log_text_browser)
 
