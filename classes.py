@@ -1,8 +1,6 @@
 from utils import *
 from train import RF_train, XGB_train, LightGBM_train
-from RF_predict import RF_Predict
-from XGB_predict import XGB_Predict
-from LightGBM_predict import LightGBM_Predict
+from predict import RF_Predict, XGB_Predict, LightGBM_Predict
 
 
 # 获取样本数据的线程
