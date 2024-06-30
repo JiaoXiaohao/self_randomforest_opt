@@ -3,10 +3,12 @@
 # description: 工具函数
 # 设置全局变量
 import os
+
 os.environ["LOKY_MAX_CPU_COUNT"] = "4"
 # GUI所需库
 from PyQt5 import QtCore, QtGui, QtWidgets
 import time
+
 # 运行所需库
 from osgeo import gdal
 from sklearn import datasets
@@ -27,8 +29,10 @@ from sklearn.metrics import (
 from sklearn.model_selection import learning_curve
 from sklearn.cluster import KMeans
 from hyperopt import hp, fmin, tpe, Trials, space_eval, STATUS_OK
+
 # 模型保存所需要库
 import pickle
+
 # 绘图所需库
 import scienceplots
 import matplotlib
@@ -37,25 +41,31 @@ from seaborn import heatmap
 from warnings import simplefilter
 from matplotlib.patches import Patch
 from matplotlib.colors import ListedColormap
+
 simplefilter(action="ignore", category=FutureWarning)
-plt.style.use(["science", "grid", "no-latex"])
+plt.style.use(["science", "no-latex"])
 # 设置中文字体
-plt.rcParams["font.sans-serif"] = ["SimHei"]
+plt.rcParams["font.sans-serif"] = ["Arial"]
 # 设置负号正常显示
 plt.rcParams["axes.unicode_minus"] = False
 plt.figure()
+
+
 # ===================== get_sample.py =====================
 def printLog(msg, blog_textBrowser):
     try:
         blog_textBrowser.append(msg)
     except Exception as e:
         QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
+
+
 def get_info(file_name, msg):
     def read_tif(file_name):
         dataset = gdal.Open(file_name)
         if dataset is None:
             msg.emit(f"{file_name}文件无法打开")
         return dataset
+
     dataset = read_tif(file_name)
     msg.emit("Dataset Name:" + file_name)
     msg.emit("Driver: " + dataset.GetDriver().ShortName + "/" + dataset.GetDriver().LongName)
@@ -78,6 +88,8 @@ def get_info(file_name, msg):
         msg.emit(f"Pixel Size = ({geotrans[1]}, {-geotrans[5]})")
     _data_ = dataset.ReadAsArray(0, 0, width, height)
     return width, height, bands, geotrans, _data_, dataset.GetProjection()
+
+
 def ReadNumClass(numclass_path):
     # 规定一个字典
     num_class = {}
@@ -106,6 +118,8 @@ def ReadNumClass(numclass_path):
                 # 以字典形式存储
                 num_class[int(line[0])] = int(line[1])
         return num_class
+
+
 def adjustLocationByGeoTransform(img, label, img_geotrans, label_geotrans, msg):
     # 判断两个影像的坐标是否一致
     if img_geotrans == label_geotrans:
@@ -143,6 +157,8 @@ def adjustLocationByGeoTransform(img, label, img_geotrans, label_geotrans, msg):
     else:
         msg.emit("Error: _label_ is not in _img_")
         return img
+
+
 def WriteSample(_img_, _label_, sample_path, class_num, msg):
     # 读取_label_数据中的唯一值确定类别
     classes = np.unique(_label_)
@@ -208,6 +224,8 @@ def WriteSample(_img_, _label_, sample_path, class_num, msg):
                             file_write_obj.writelines(line + "\n")
                             # 统计每个类别的样本数量
                             class_counts[_class] += 1
+
+
 def get_samples(img_path, label_path, sample_path, numclass_path, msg):
     try:
         start_time = time.time()
@@ -275,6 +293,8 @@ def get_samples(img_path, label_path, sample_path, numclass_path, msg):
     except Exception as e:
         msg.emit("Error: " + str(e))
         return False
+
+
 # ===================== RF_train.py =====================
 # 定义字典，便于解析样本数据集txt
 def label_dict(s):
@@ -285,6 +305,8 @@ def label_dict(s):
     else:
         it = {"Vegetation": 1, "Non-Vegetation": 2}
         return it[s]
+
+
 def PlotHeatmap(corr):
     # 保留下三角矩阵
     mask = np.zeros_like(corr)
@@ -292,7 +314,10 @@ def PlotHeatmap(corr):
     # 绘制热力图
     heatmap(corr, mask=mask, cmap="RdBu_r", annot=True, fmt=".2f")
     plt.savefig("corr.png", dpi=500)
+    plt.clf()
     # plt.show()
+
+
 def Split_train_test_dataset(x, y, val_size=0.2, random_state=1):
     # 分割训练集和验证集
     train_data, test_data, train_label, test_label = model_selection.train_test_split(
@@ -305,6 +330,8 @@ def Split_train_test_dataset(x, y, val_size=0.2, random_state=1):
     # print("训练集样本数量：", train_data.shape[0])
     # print("测试集样本数量：", test_data.shape[0])
     return train_data, test_data, train_label, test_label
+
+
 def plot_learning_curve(estimator, title, X, y, model_name, ylim=None, cv=None, n_jobs=1):
     plt.title(title)
     if ylim is not None:
@@ -345,23 +372,13 @@ def plot_learning_curve(estimator, title, X, y, model_name, ylim=None, cv=None, 
         color="b",
         label="the score on the validation set",
     )
-    plt.legend(loc="lower right")
+    plt.legend()
     plt.savefig(f"learning curve of {model_name}.png", dpi=800)
     # 清除图像
     plt.clf()
     # plt.savefig("学习曲线_XBM.png", dpi=800)
-def PlotImportance_RF(importances):
-    indices = np.argsort(importances)[::-1]
-    plt.title("Feature importances by RandomTreeClassifier")
-    plt.bar(range(len(indices)), importances[indices], color="darkorange", align="center")
-    plt.xticks(range(len(indices)), indices)
-    plt.xlim([-1, len(indices)])
-    plt.xlabel("Feature")
-    plt.ylabel("Importance")
-    plt.savefig("Feature importances by RandomTreeClassifier.png", dpi=500)
-    # 清楚图像
-    plt.clf()
-    # plt.show()
+
+
 def SavePickle(classifier, SavePath):
     # 以二进制的方式打开文件：
     file = open(SavePath, "wb")
@@ -369,6 +386,8 @@ def SavePickle(classifier, SavePath):
     pickle.dump(classifier, file)
     # 最后关闭文件：
     file.close()
+
+
 # ===================== RF_predict.py =====================
 def Predict_RF_func(model_path, _img_):
     # 以读二进制的方式打开文件
@@ -390,6 +409,22 @@ def Predict_RF_func(model_path, _img_):
     pred = pred.reshape(_img_.shape[1], _img_.shape[2])
     pred = pred.astype(np.uint8)
     return pred
+
+
+def PlotImportance_RF(importances):
+    indices = np.argsort(importances)[::-1]
+    plt.title("Feature importances by RandomTreeClassifier")
+    plt.bar(range(len(indices)), importances[indices], color="darkorange", align="center")
+    plt.xticks(range(len(indices)), indices)
+    plt.xlim([-1, len(indices)])
+    plt.xlabel("Feature")
+    plt.ylabel("Importance")
+    plt.savefig("Feature importances by RandomTreeClassifier.png", dpi=500)
+    # 清楚图像
+    plt.clf()
+    # plt.show()
+
+
 def PlotPredictResult(pred, model, classPath=r"data\\ClassDefine.txt"):
     labels = []
     colors = []
@@ -411,11 +446,14 @@ def PlotPredictResult(pred, model, classPath=r"data\\ClassDefine.txt"):
     legend_elements = [Patch(color=colors[i], label=labels[i]) for i in range(len(colors))]
     # 添加图例
     plt.legend(handles=legend_elements, loc="best")
-    plt.title("预测结果")
+    plt.title(f"The result of {model} predict")
     # 保存
     plt.imshow(pred, cmap=cmap)
     plt.savefig(f"PredictResult_{model}.png", dpi=500)
+    plt.clf()
     # plt.show()
+
+
 # ===================== K_Means_Classify.py =====================
 def KMeansExecute(data, K, img_width, img_height, n_init=10, random_state=0):
     # K-Means
@@ -424,10 +462,14 @@ def KMeansExecute(data, K, img_width, img_height, n_init=10, random_state=0):
     idx = kmeans.labels_
     labels = idx.reshape(img_width, img_height)
     return labels
+
+
 def PlotKMeansResult(labels):
     # 显示聚类结果
     plt.imshow(labels, cmap="rainbow")
     # plt.show()
+
+
 # ===================== SVM_Classify.py =====================
 def Predict_SVM(model_path, _img_):
     # 以读二进制的方式打开文件
@@ -449,6 +491,8 @@ def Predict_SVM(model_path, _img_):
     pred = pred.reshape(_img_.shape[1], _img_.shape[2])
     pred = pred.astype(np.uint8)
     return pred
+
+
 # 保存tif文件函数
 def writeTiff(im_data, im_geotrans, im_proj, path):
     if "int8" in im_data.dtype.name:
@@ -471,12 +515,16 @@ def writeTiff(im_data, im_geotrans, im_proj, path):
     for i in range(im_bands):
         dataset.GetRasterBand(i + 1).WriteArray(im_data[i])
     del dataset
+
+
 # ===================== XGB_train.py =====================
 def CheckY(y):
     # XGBoost要求标签从0开始
     if y.min() == 1:
         y = y - 1
     return y
+
+
 def PlotImportance_XGB(importances):
     indices = np.argsort(importances)[::-1]
     # print("Feature ranking:")
@@ -488,9 +536,11 @@ def PlotImportance_XGB(importances):
     plt.xlim([-1, len(indices)])
     plt.xlabel("Feature")
     plt.ylabel("Importance")
-    plt.legend().set_visible(False)
+    # plt.legend().set_visible(False)
     plt.savefig("Feature importances by XGBoost.png", dpi=500)
     # plt.show()
+
+
 def Predict_XGB_func(model_path, _img_):
     # 以读二进制的方式打开文件
     file = open(model_path, "rb")
@@ -509,8 +559,11 @@ def Predict_XGB_func(model_path, _img_):
     pred = xgb_model.predict(data)
     # 同样地，我们对预测好的数据调整为我们图像的格式
     pred = pred.reshape(_img_.shape[1], _img_.shape[2])
+    print(pred.shape)
     pred = pred.astype(np.uint8)
     return pred
+
+
 # ===================== lightGBM.py =====================
 def PlotImportance_LGBM(importances, feature_names):
     indices = np.argsort(importances)[::-1]
@@ -523,9 +576,10 @@ def PlotImportance_LGBM(importances, feature_names):
     plt.xlim([-1, len(indices)])
     plt.xlabel("Feature")
     plt.ylabel("Importance")
-    plt.legend().set_visible(False)
     plt.savefig("Feature importances by LightGBM.png", dpi=500)
     # plt.show()
+
+
 def Predict_LGBM_func(model_path, _img_):
     # 以读二进制的方式打开文件
     file = open(model_path, "rb")
@@ -544,8 +598,11 @@ def Predict_LGBM_func(model_path, _img_):
     pred = lgbm_model.predict(data)
     # 同样地，我们对预测好的数据调整为我们图像的格式
     pred = pred.reshape(_img_.shape[1], _img_.shape[2])
+    print(pred.shape)
     pred = pred.astype(np.uint8)
     return pred
+
+
 # ===================== ui_functions.py =====================
 # 选择的遥感影像数据路径
 def selectImgPath(lineEdit, log_textBrowser):
@@ -558,6 +615,8 @@ def selectImgPath(lineEdit, log_textBrowser):
             printLog("选择的遥感影像数据路径:" + str(img), log_textBrowser)
     except Exception as e:
         QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
+
+
 # 选择的标签数据路径
 def selectLabelPath(lineEdit, log_textBrowser):
     try:
@@ -569,6 +628,8 @@ def selectLabelPath(lineEdit, log_textBrowser):
             printLog("选择的标签数据路径:" + str(label), log_textBrowser)
     except Exception as e:
         QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
+
+
 # 选择的输出样本数据路径
 def selectOutSamplePath(lineEdit, log_textBrowser):
     try:
@@ -581,6 +642,8 @@ def selectOutSamplePath(lineEdit, log_textBrowser):
             printLog("选择的输出样本数据路径:" + str(out_sample), log_textBrowser)
     except Exception as e:
         QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
+
+
 # 选择的NumClass数据路径
 def selectNumClassPath(lineEdit, log_textBrowser):
     try:
@@ -592,6 +655,8 @@ def selectNumClassPath(lineEdit, log_textBrowser):
             printLog("选择的NumClass数据路径:" + str(NumClassPath), log_textBrowser)
     except Exception as e:
         QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
+
+
 # 选择的模型保存路径
 def selectSaveModelPath(lineEdit, log_textBrowser):
     try:
@@ -603,6 +668,8 @@ def selectSaveModelPath(lineEdit, log_textBrowser):
             printLog("选择的模型保存路径:" + str(model), log_textBrowser)
     except Exception as e:
         QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
+
+
 # 选择的模型路径
 def selectModelPath(lineEdit, log_textBrowser):
     try:
@@ -614,6 +681,8 @@ def selectModelPath(lineEdit, log_textBrowser):
             printLog("选择的模型路径:" + str(model), log_textBrowser)
     except Exception as e:
         QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
+
+
 # 选择的保存影像数据路径
 def selectSaveImgPath(lineEdit, log_textBrowser):
     try:
@@ -625,6 +694,8 @@ def selectSaveImgPath(lineEdit, log_textBrowser):
             printLog("选择的保存影像数据路径:" + str(img), log_textBrowser)
     except Exception as e:
         QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
+
+
 # get samples clicked
 # 获取样本
 def GetSamplesF(
@@ -650,5 +721,7 @@ def GetSamplesF(
             msg.emit("*" * 10 + " 请检查输入路径是否正确 " + "*" * 10)
     except Exception as e:
         QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
+
+
 def float_range(start, end, step):
     return [start + step * i for i in range(int((end - start) / step))]

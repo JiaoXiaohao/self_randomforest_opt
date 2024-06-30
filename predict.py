@@ -2,6 +2,8 @@
 # File Name：predict.py
 # description: 预测
 from utils import *
+
+
 def RF_Predict(RF_model_path, img_path, save_path, class_path, msg):
     def get_inf(Landset_Path):
         # 读取影像数据
@@ -13,6 +15,7 @@ def RF_Predict(RF_model_path, img_path, save_path, class_path, msg):
         img_projection = dataset.GetProjection()
         _img_ = dataset.ReadAsArray(0, 0, img_width, img_height)
         return img_width, img_height, img_bands, img_geotrans, _img_, img_projection
+
     start_time = time.time()
     msg.emit("*" * 30 + "读取影像数据" + "*" * 30)
     img_width, img_height, img_bands, img_geotrans, _img_, img_projection = get_inf(img_path)
@@ -29,6 +32,8 @@ def RF_Predict(RF_model_path, img_path, save_path, class_path, msg):
     msg.emit("*" * 30 + "写入完毕" + "*" * 30)
     end_time = time.time()
     msg.emit("*" * 25 + " 预测运行时间:" + str(end_time - start_time) + " s " + "*" * 25)
+
+
 def XGB_Predict(XGB_model_path, img_Path, SavePath, classPath, msg):
     def get_inf(Landset_Path):
         # 读取影像数据
@@ -40,6 +45,7 @@ def XGB_Predict(XGB_model_path, img_Path, SavePath, classPath, msg):
         img_projection = dataset.GetProjection()
         _img_ = dataset.ReadAsArray(0, 0, img_width, img_height)
         return img_width, img_height, img_bands, img_geotrans, _img_, img_projection
+
     start_time = time.time()
     msg.emit("*" * 30 + "读取影像数据" + "*" * 30)
     img_width, img_height, img_bands, img_geotrans, _img_, img_projection = get_inf(img_Path)
@@ -56,6 +62,8 @@ def XGB_Predict(XGB_model_path, img_Path, SavePath, classPath, msg):
     msg.emit("*" * 30 + "写入完毕" + "*" * 30)
     end_time = time.time()
     msg.emit("*" * 25 + "程序运行时间：" + str(end_time - start_time) + "s" + "*" * 25)
+
+
 def LightGBM_Predict(LGBM_model_path, img_path, save_path, classPath, msg):
     def get_inf(Landset_Path):
         # 读取影像数据
@@ -67,6 +75,7 @@ def LightGBM_Predict(LGBM_model_path, img_path, save_path, classPath, msg):
         img_projection = dataset.GetProjection()
         _img_ = dataset.ReadAsArray(0, 0, img_width, img_height)
         return img_width, img_height, img_bands, img_geotrans, _img_, img_projection
+
     start_time = time.time()
     msg.emit("*" * 30 + "读取影像数据" + "*" * 30)
     img_width, img_height, img_bands, img_geotrans, _img_, img_projection = get_inf(img_path)
@@ -78,7 +87,7 @@ def LightGBM_Predict(LGBM_model_path, img_path, save_path, classPath, msg):
     pred = pred + 1
     msg.emit("*" * 30 + "预测完毕" + "*" * 30)
     # Plot展示
-    PlotPredictResult(pred, "lightGBM", classPath)
+    PlotPredictResult(pred, "LightGBM", classPath)
     #  将结果写到tif图像里
     msg.emit("*" * 30 + "写入" + "*" * 30)
     writeTiff(pred, img_geotrans, img_projection, save_path)
