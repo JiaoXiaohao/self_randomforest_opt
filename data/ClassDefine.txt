@@ -1,5 +1,5 @@
 class,number,name,color
-1,5000,building,yellow
-2,10000,Vegetation,green
-3,6000,water,blue
-4,5000,background,black
+1,1000,building,yellow
+2,2000,Vegetation,green
+3,1200,water,blue
+4,1000,background,black

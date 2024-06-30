@@ -21,7 +21,7 @@ def RF_train(sample_path, SavePath, space, msg, test_size=0.5):
     column_names = header_line.split(",")
     # 重新定义converters字典，跳过第一行（表头）
     converters = {i: label_dict if column_names[i] == "class" else int for i in range(len(column_names))}
-    # 从第二行开始读取数据
+    # 从第二行开始读取数据,第一行为表头
     data = np.loadtxt(sample_path, dtype=int, delimiter=",", skiprows=1, converters=converters)
     x, y = np.split(data, indices_or_sections=(len(column_names) - 1,), axis=1)  # x为数据，y为标签
     # msg.emit(x.shape, y.shape)
