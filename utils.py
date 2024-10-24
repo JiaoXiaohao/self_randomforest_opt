@@ -136,12 +136,7 @@ def adjustLocationByGeoTransform(img, label, img_geotrans, label_geotrans, msg):
         msg.emit(f"Error calculating geo transforms: {e}")
         return img
     # 确保_label_包含在_img_内
-    if (
-        label_min_x >= img_min_x
-        and label_max_x <= img_max_x
-        and label_min_y >= img_min_y
-        and label_max_y <= img_max_y
-    ):
+    if label_min_x >= img_min_x and label_max_x <= img_max_x and label_min_y >= img_min_y and label_max_y <= img_max_y:
         # 计算在_img_中对应_label_的区域
         label_start_col = int((label_min_x - img_geotrans[0]) / img_geotrans[1])
         label_start_row = int((img_max_y - label_max_y) / abs(img_geotrans[5]))
@@ -233,11 +228,7 @@ def get_samples(img_path, label_path, sample_path, numclass_path, msg):
         if not img_path.endswith(".tif") and not img_path.endswith(".tiff") and not img_path.endswith(".pix"):
             msg.emit("Error: img_path is not a raster data")
             return
-        if (
-            not label_path.endswith(".tif")
-            and not label_path.endswith(".tiff")
-            and not label_path.endswith(".pix")
-        ):
+        if not label_path.endswith(".tif") and not label_path.endswith(".tiff") and not label_path.endswith(".pix"):
             msg.emit("Error: label_path is not a raster data")
             return
         # 读取影像数据
@@ -607,9 +598,7 @@ def Predict_LGBM_func(model_path, _img_):
 # 选择的遥感影像数据路径
 def selectImgPath(lineEdit, log_textBrowser):
     try:
-        img, _ = QtWidgets.QFileDialog.getOpenFileName(
-            None, "Select Image", "", "Image Files(*.tif *.tiff *.pix)"
-        )
+        img, _ = QtWidgets.QFileDialog.getOpenFileName(None, "Select Image", "", "Image Files(*.tif *.tiff *.pix)")
         if img:
             lineEdit.setText(str(img))
             printLog("选择的遥感影像数据路径:" + str(img), log_textBrowser)
@@ -620,9 +609,7 @@ def selectImgPath(lineEdit, log_textBrowser):
 # 选择的标签数据路径
 def selectLabelPath(lineEdit, log_textBrowser):
     try:
-        label, _ = QtWidgets.QFileDialog.getOpenFileName(
-            None, "Select Label", "", "Image Files(*.tif *.tiff *.pix)"
-        )
+        label, _ = QtWidgets.QFileDialog.getOpenFileName(None, "Select Label", "", "Image Files(*.tif *.tiff *.pix)")
         if label:
             lineEdit.setText(str(label))
             printLog("选择的标签数据路径:" + str(label), log_textBrowser)
@@ -634,9 +621,7 @@ def selectLabelPath(lineEdit, log_textBrowser):
 def selectOutSamplePath(lineEdit, log_textBrowser):
     try:
         # 新建文件的输出路径文件名
-        out_sample, _ = QtWidgets.QFileDialog.getSaveFileName(
-            None, "Save File", "", "Image Files(*.csv *.txt)"
-        )
+        out_sample, _ = QtWidgets.QFileDialog.getSaveFileName(None, "Save File", "", "Image Files(*.csv *.txt)")
         if out_sample:
             lineEdit.setText(str(out_sample))
             printLog("选择的输出样本数据路径:" + str(out_sample), log_textBrowser)
@@ -647,9 +632,7 @@ def selectOutSamplePath(lineEdit, log_textBrowser):
 # 选择的NumClass数据路径
 def selectNumClassPath(lineEdit, log_textBrowser):
     try:
-        NumClassPath, _ = QtWidgets.QFileDialog.getOpenFileName(
-            None, "Select NumClass", "", "Image Files(*.csv *.txt)"
-        )
+        NumClassPath, _ = QtWidgets.QFileDialog.getOpenFileName(None, "Select NumClass", "", "Image Files(*.csv *.txt)")
         if NumClassPath:
             lineEdit.setText(str(NumClassPath))
             printLog("选择的NumClass数据路径:" + str(NumClassPath), log_textBrowser)
@@ -660,9 +643,7 @@ def selectNumClassPath(lineEdit, log_textBrowser):
 # 选择的模型保存路径
 def selectSaveModelPath(lineEdit, log_textBrowser):
     try:
-        model, _ = QtWidgets.QFileDialog.getSaveFileName(
-            None, "Save Model", "", "Model Files(*.pkl *.pickle)"
-        )
+        model, _ = QtWidgets.QFileDialog.getSaveFileName(None, "Save Model", "", "Model Files(*.pkl *.pickle)")
         if model:
             lineEdit.setText(str(model))
             printLog("选择的模型保存路径:" + str(model), log_textBrowser)
@@ -673,9 +654,7 @@ def selectSaveModelPath(lineEdit, log_textBrowser):
 # 选择的模型路径
 def selectModelPath(lineEdit, log_textBrowser):
     try:
-        model, _ = QtWidgets.QFileDialog.getOpenFileName(
-            None, "Select Model", "", "Model Files(*.pkl *.pickle)"
-        )
+        model, _ = QtWidgets.QFileDialog.getOpenFileName(None, "Select Model", "", "Model Files(*.pkl *.pickle)")
         if model:
             lineEdit.setText(str(model))
             printLog("选择的模型路径:" + str(model), log_textBrowser)
@@ -686,9 +665,7 @@ def selectModelPath(lineEdit, log_textBrowser):
 # 选择的保存影像数据路径
 def selectSaveImgPath(lineEdit, log_textBrowser):
     try:
-        img, _ = QtWidgets.QFileDialog.getSaveFileName(
-            None, "Save Image", "", "Image Files(*.tif *.tiff *.pix)"
-        )
+        img, _ = QtWidgets.QFileDialog.getSaveFileName(None, "Save Image", "", "Image Files(*.tif *.tiff *.pix)")
         if img:
             lineEdit.setText(str(img))
             printLog("选择的保存影像数据路径:" + str(img), log_textBrowser)

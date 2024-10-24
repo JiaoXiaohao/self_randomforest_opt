@@ -2,9 +2,12 @@
 # File name: __UI__.py
 from PyQt5 import QtCore, QtGui, QtWidgets
 from classes import *
+
+
 class ClassificationUI(object):
     def ThreadLog(self, msg):
         self.log_text_browser.append(msg)
+
     def SaveLogButton_clicked(self):
         # 获取当前text browser的文本
         # 打开一个保存文件选择的框
@@ -12,13 +15,12 @@ class ClassificationUI(object):
             # 获取当前text browser的文本
             text = self.log_text_browser.toPlainText()
             # 新建文件的输出路径文件名
-            out_path, _ = QtWidgets.QFileDialog.getSaveFileName(
-                None, "Save File", "", "Text Files(*.txt)"
-            )
+            out_path, _ = QtWidgets.QFileDialog.getSaveFileName(None, "Save File", "", "Text Files(*.txt)")
             open(out_path, "w").write(text)
             QtWidgets.QMessageBox.information(None, "成功", "成功保存日志文件!", QtWidgets.QMessageBox.Ok)
         except Exception as e:
             QtWidgets.QMessageBox.critical(None, "Error", str(e), QtWidgets.QMessageBox.Ok)
+
     def get_page_space(self):
         if self.tabWidgetPages.currentIndex() == 0:
             space = {
@@ -155,7 +157,7 @@ class ClassificationUI(object):
                 "max_depth": hp.choice(
                     "max_depth",
                     range(
-                        int( self.XGB_max_depth_min.text()),
+                        int(self.XGB_max_depth_min.text()),
                         int(self.XGB_max_depth_max.text()),
                         int(self.XGB_max_depth_interval.text()),
                     ),
@@ -221,25 +223,35 @@ class ClassificationUI(object):
                 # "boosting_type": "gbdt",
             }
             return space
+
     # 随机森林数据获取部分的按钮点击链接
     def RF_select_image_pushbutton_clicked(self):
         selectImgPath(self.RF_img_path, self.log_text_browser)
+
     def RF_select_label_pushbutton_clicked(self):
         selectLabelPath(self.RF_label_path, self.log_text_browser)
+
     def RF_select_numclass_path_pushButton_clicked(self):
         selectNumClassPath(self.RF_class_num_path, self.log_text_browser)
+
     def RF_select_sample_path_pushButton_clicked(self):
         selectOutSamplePath(self.RF_output_samples_path, self.log_text_browser)
+
     def select_RF_train_Save_model_path_pushButton_clicked(self):
         selectSaveModelPath(self.RF_train_model_save_path, self.log_text_browser)
+
     def select_RF_model_path_pushButton_clicked(self):
         selectModelPath(self.RF_model_path, self.log_text_browser)
+
     def select_RF_class_num_pushButton_clicked(self):
         selectNumClassPath(self.RF_class_num_path_2, self.log_text_browser)
+
     def select_RF_predict_result_output_path_pushButton_clicked(self):
         selectSaveImgPath(self.RF_output_predict_result_path, self.log_text_browser)
+
     def select_RF_img_predict_path_pushButton_clicked(self):
         selectImgPath(self.RF_img_predict_path, self.log_text_browser)
+
     def RF_get_sample_pushButton_clicked(self):
         # 判断是否有路径
         if (
@@ -260,6 +272,7 @@ class ClassificationUI(object):
         self.getSamplesFThread.error.connect(self.ThreadLog)
         self.getSamplesFThread.msg.connect(self.ThreadLog)
         self.getSamplesFThread.start()
+
     def RF_train_pushButton_clicked(self):
         # 判断是否有路径
         if (
@@ -286,6 +299,7 @@ class ClassificationUI(object):
         self.trainThread.error.connect(self.ThreadLog)
         self.trainThread.msg.connect(self.ThreadLog)
         self.trainThread.start()
+
     def RF_predict_pushButton_clicked(self):
         # 判断是否有路径
         if (
@@ -307,25 +321,35 @@ class ClassificationUI(object):
         self.predictThread.error.connect(self.ThreadLog)
         self.predictThread.msg.connect(self.ThreadLog)
         self.predictThread.start()
+
     # XGB数据获取部分的按钮点击链接
     def XGB_select_image_pushbutton_clicked(self):
         selectImgPath(self.XGB_img_path, self.log_text_browser)
+
     def XGB_select_label_pushbutton_clicked(self):
         selectLabelPath(self.XGB_label_path, self.log_text_browser)
+
     def XGB_select_numclass_path_pushbutton_clicked(self):
         selectNumClassPath(self.XGB_class_num_path, self.log_text_browser)
+
     def XGB_select_sample_path_pushbutton_clicked(self):
         selectOutSamplePath(self.XGB_output_samples_path, self.log_text_browser)
+
     def select_XGB_train_Save_model_path_pushButton_clicked(self):
         selectSaveModelPath(self.XGB_train_model_save_path, self.log_text_browser)
+
     def select_XGB_model_path_pushButton_clicked(self):
         selectModelPath(self.XGB_model_path, self.log_text_browser)
+
     def select_XGB_class_num_button_2_clicked(self):
         selectNumClassPath(self.XGB_class_num_path_2, self.log_text_browser)
+
     def XGB_select_predict_result_output_path_pushButton_clicked(self):
         selectSaveImgPath(self.XGB_output_predict_result_path, self.log_text_browser)
+
     def select_XGB_img_predict_path_pushButton_clicked(self):
         selectImgPath(self.XGB_img_predict_path, self.log_text_browser)
+
     def XGB_get_sample_pushButton_clicked(self):
         # 判断是否有路径
         if (
@@ -346,6 +370,7 @@ class ClassificationUI(object):
         self.getSamplesFThread.error.connect(self.ThreadLog)
         self.getSamplesFThread.msg.connect(self.ThreadLog)
         self.getSamplesFThread.start()
+
     def XGB_train_pushButton_clicked(self):
         # 判断是否有路径
         if (
@@ -372,6 +397,7 @@ class ClassificationUI(object):
         self.trainThread.error.connect(self.ThreadLog)
         self.trainThread.msg.connect(self.ThreadLog)
         self.trainThread.start()
+
     def XGB_predict_pushButton_clicked(self):
         # 判断是否有路径
         if (
@@ -393,25 +419,35 @@ class ClassificationUI(object):
         self.predictThread.error.connect(self.ThreadLog)
         self.predictThread.msg.connect(self.ThreadLog)
         self.predictThread.start()
+
     # LGB数据获取部分的按钮点击链接
     def LGB_select_image_pushbutton_clicked(self):
         selectImgPath(self.LGB_img_path, self.log_text_browser)
+
     def LGB_select_label_pushbutton_clicked(self):
         selectLabelPath(self.LGB_label_path, self.log_text_browser)
+
     def LGB_select_numclass_path_pushbutton_clicked(self):
         selectNumClassPath(self.LGB_class_num_path, self.log_text_browser)
+
     def LGB_select_sample_path_pushbutton_clicked(self):
         selectOutSamplePath(self.LGB_output_samples_path, self.log_text_browser)
+
     def select_LGB_train_Save_model_path_pushButton_clicked(self):
         selectSaveModelPath(self.LGB_train_model_save_path, self.log_text_browser)
+
     def select_LGB_model_path_pushbutton_clicked(self):
         selectModelPath(self.LGB_model_path, self.log_text_browser)
+
     def select_LGB_class_num_button_2_clicked(self):
         selectNumClassPath(self.LGB_class_num_path_2, self.log_text_browser)
+
     def LGB_select_predict_result_output_path_pushbutton_clicked(self):
         selectSaveImgPath(self.LGB_output_predict_result_path, self.log_text_browser)
+
     def select_LGB_img_predict_path_button_clicked(self):
         selectImgPath(self.LGB_img_predict_path, self.log_text_browser)
+
     def LGB_get_sample_pushButton_clicked(self):
         # 判断是否有路径
         if (
@@ -432,6 +468,7 @@ class ClassificationUI(object):
         self.getSamplesFThread.error.connect(self.ThreadLog)
         self.getSamplesFThread.msg.connect(self.ThreadLog)
         self.getSamplesFThread.start()
+
     def LGB_train_pushButton_clicked(self):
         # 判断是否有路径
         if (
@@ -458,6 +495,7 @@ class ClassificationUI(object):
         self.trainThread.error.connect(self.ThreadLog)
         self.trainThread.msg.connect(self.ThreadLog)
         self.trainThread.start()
+
     def LGB_predict_pushButton_clicked(self):
         # 判断是否有路径
         if (
@@ -479,11 +517,12 @@ class ClassificationUI(object):
         self.predictThread.error.connect(self.ThreadLog)
         self.predictThread.msg.connect(self.ThreadLog)
         self.predictThread.start()
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1300, 910)
         # 固定窗口大小
-        MainWindow.setFixedSize(1300, 910)
+        # MainWindow.setFixedSize(1300, 910)
         self.centralWidget = QtWidgets.QWidget(MainWindow)
         self.centralWidget.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.centralWidget.setObjectName("centralWidget")
@@ -523,6 +562,7 @@ class ClassificationUI(object):
         self.tabWidgetPages.currentChanged.connect(self.tabWidgetPagesChanged)
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
     def RF_tab_page_init(self):
         # ======================================== RF_get_samples_group ========================================
         self.RF_get_samples_group = QtWidgets.QGroupBox(self.RF_tab_page)
@@ -571,9 +611,7 @@ class ClassificationUI(object):
         self.select_RF_output_samples_path_button = QtWidgets.QPushButton(self.RF_get_samples_group)
         self.select_RF_output_samples_path_button.setGeometry(QtCore.QRect(350, 141, 100, 30))
         self.select_RF_output_samples_path_button.setObjectName("select_RF_output_samples_path_button")
-        self.select_RF_output_samples_path_button.clicked.connect(
-            self.RF_select_sample_path_pushButton_clicked
-        )
+        self.select_RF_output_samples_path_button.clicked.connect(self.RF_select_sample_path_pushButton_clicked)
         self.RF_get_samples_button = QtWidgets.QPushButton(self.RF_get_samples_group)
         self.RF_get_samples_button.setGeometry(QtCore.QRect(160, 180, 100, 30))
         self.RF_get_samples_button.setObjectName("get_RF_samples_button")
@@ -719,9 +757,7 @@ class ClassificationUI(object):
         self.select_RF_img_predict_path_button = QtWidgets.QPushButton(self.RF_predict_group)
         self.select_RF_img_predict_path_button.setGeometry(QtCore.QRect(350, 80, 100, 30))
         self.select_RF_img_predict_path_button.setObjectName("select_RF_img_predict_path_button")
-        self.select_RF_img_predict_path_button.clicked.connect(
-            self.select_RF_img_predict_path_pushButton_clicked
-        )
+        self.select_RF_img_predict_path_button.clicked.connect(self.select_RF_img_predict_path_pushButton_clicked)
         self.RF_class_num_label_2 = QtWidgets.QLabel(self.RF_predict_group)
         self.RF_class_num_label_2.setGeometry(QtCore.QRect(10, 120, 80, 30))
         self.RF_class_num_label_2.setObjectName("RF_class_num_label_2")
@@ -742,9 +778,7 @@ class ClassificationUI(object):
         self.RF_output_predict_result_path.setReadOnly(True)
         self.RF_select_predict_result_output_path_button = QtWidgets.QPushButton(self.RF_predict_group)
         self.RF_select_predict_result_output_path_button.setGeometry(QtCore.QRect(350, 160, 100, 30))
-        self.RF_select_predict_result_output_path_button.setObjectName(
-            "RF_select_predict_result_output_path_button"
-        )
+        self.RF_select_predict_result_output_path_button.setObjectName("RF_select_predict_result_output_path_button")
         self.RF_select_predict_result_output_path_button.clicked.connect(
             self.select_RF_predict_result_output_path_pushButton_clicked
         )
@@ -752,6 +786,7 @@ class ClassificationUI(object):
         self.RF_predict_button.setGeometry(QtCore.QRect(160, 200, 100, 30))
         self.RF_predict_button.setObjectName("RF_predict_button")
         self.RF_predict_button.clicked.connect(self.RF_predict_pushButton_clicked)
+
     def LightGBM_tab_page_init(self):
         # ======================================== LGB_get_samples_group ========================================
         self.LGB_get_samples_group = QtWidgets.QGroupBox(self.LGB_tab_page)
@@ -800,9 +835,7 @@ class ClassificationUI(object):
         self.select_LGB_output_samples_path_button = QtWidgets.QPushButton(self.LGB_get_samples_group)
         self.select_LGB_output_samples_path_button.setGeometry(QtCore.QRect(350, 140, 100, 30))
         self.select_LGB_output_samples_path_button.setObjectName("select_LGB_output_samples_path_button")
-        self.select_LGB_output_samples_path_button.clicked.connect(
-            self.LGB_select_sample_path_pushbutton_clicked
-        )
+        self.select_LGB_output_samples_path_button.clicked.connect(self.LGB_select_sample_path_pushbutton_clicked)
         self.LGB_get_samples_button = QtWidgets.QPushButton(self.LGB_get_samples_group)
         self.LGB_get_samples_button.setGeometry(QtCore.QRect(160, 180, 100, 30))
         self.LGB_get_samples_button.setObjectName("get_LGB_samples_button")
@@ -968,9 +1001,7 @@ class ClassificationUI(object):
         self.LGB_output_predict_result_path.setReadOnly(True)
         self.LGB_select_predict_result_output_path_button = QtWidgets.QPushButton(self.LGB_predict_group)
         self.LGB_select_predict_result_output_path_button.setGeometry(QtCore.QRect(350, 140, 100, 30))
-        self.LGB_select_predict_result_output_path_button.setObjectName(
-            "LGB_select_predict_result_output_path_button"
-        )
+        self.LGB_select_predict_result_output_path_button.setObjectName("LGB_select_predict_result_output_path_button")
         self.LGB_select_predict_result_output_path_button.clicked.connect(
             self.LGB_select_predict_result_output_path_pushbutton_clicked
         )
@@ -985,9 +1016,7 @@ class ClassificationUI(object):
         self.select_LGB_img_predict_path_button = QtWidgets.QPushButton(self.LGB_predict_group)
         self.select_LGB_img_predict_path_button.setGeometry(QtCore.QRect(350, 60, 100, 30))
         self.select_LGB_img_predict_path_button.setObjectName("select_LGB_img_predict_path_button")
-        self.select_LGB_img_predict_path_button.clicked.connect(
-            self.select_LGB_img_predict_path_button_clicked
-        )
+        self.select_LGB_img_predict_path_button.clicked.connect(self.select_LGB_img_predict_path_button_clicked)
         # 类别路径
         self.LGB_class_num_label_2 = QtWidgets.QLabel(self.LGB_predict_group)
         self.LGB_class_num_label_2.setGeometry(QtCore.QRect(10, 100, 80, 30))
@@ -1004,6 +1033,7 @@ class ClassificationUI(object):
         self.LGB_predict_button.setGeometry(QtCore.QRect(160, 180, 100, 30))
         self.LGB_predict_button.setObjectName("LGB_predict_button")
         self.LGB_predict_button.clicked.connect(self.LGB_predict_pushButton_clicked)
+
     def XGB_tab_page_init(self):
         # ======================================== XGB_get_samples_group ========================================
         self.XGB_get_samples_group = QtWidgets.QGroupBox(self.XGB_tab_page)
@@ -1052,9 +1082,7 @@ class ClassificationUI(object):
         self.select_XGB_output_samples_path_button = QtWidgets.QPushButton(self.XGB_get_samples_group)
         self.select_XGB_output_samples_path_button.setGeometry(QtCore.QRect(350, 140, 100, 30))
         self.select_XGB_output_samples_path_button.setObjectName("select_XGB_output_samples_path_button")
-        self.select_XGB_output_samples_path_button.clicked.connect(
-            self.XGB_select_sample_path_pushbutton_clicked
-        )
+        self.select_XGB_output_samples_path_button.clicked.connect(self.XGB_select_sample_path_pushbutton_clicked)
         self.XGB_get_samples_button = QtWidgets.QPushButton(self.XGB_get_samples_group)
         self.XGB_get_samples_button.setGeometry(QtCore.QRect(160, 175, 100, 30))
         self.XGB_get_samples_button.setObjectName("get_XGB_samples_button")
@@ -1230,9 +1258,7 @@ class ClassificationUI(object):
         self.XGB_output_predict_result_path.setReadOnly(True)
         self.XGB_select_predict_result_output_path_button = QtWidgets.QPushButton(self.XGB_predict_group)
         self.XGB_select_predict_result_output_path_button.setGeometry(QtCore.QRect(350, 140, 100, 30))
-        self.XGB_select_predict_result_output_path_button.setObjectName(
-            "XGB_select_predict_result_output_path_button"
-        )
+        self.XGB_select_predict_result_output_path_button.setObjectName("XGB_select_predict_result_output_path_button")
         self.XGB_select_predict_result_output_path_button.clicked.connect(
             self.XGB_select_predict_result_output_path_pushButton_clicked
         )
@@ -1246,9 +1272,7 @@ class ClassificationUI(object):
         self.select_XGB_img_predict_path_button = QtWidgets.QPushButton(self.XGB_predict_group)
         self.select_XGB_img_predict_path_button.setGeometry(QtCore.QRect(350, 60, 100, 30))
         self.select_XGB_img_predict_path_button.setObjectName("select_XGB_img_predict_path_button")
-        self.select_XGB_img_predict_path_button.clicked.connect(
-            self.select_XGB_img_predict_path_pushButton_clicked
-        )
+        self.select_XGB_img_predict_path_button.clicked.connect(self.select_XGB_img_predict_path_pushButton_clicked)
         self.XGB_class_num_label_2 = QtWidgets.QLabel(self.XGB_predict_group)
         self.XGB_class_num_label_2.setGeometry(QtCore.QRect(10, 100, 80, 30))
         self.XGB_class_num_label_2.setObjectName("XGB_class_num_label_2")
@@ -1264,6 +1288,7 @@ class ClassificationUI(object):
         self.XGB_predict_button.setGeometry(QtCore.QRect(160, 180, 100, 30))
         self.XGB_predict_button.setObjectName("XGB_predict_button")
         self.XGB_predict_button.clicked.connect(self.XGB_predict_pushButton_clicked)
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "遥感影像机器学习地物分类工具箱"))
@@ -1462,6 +1487,7 @@ class ClassificationUI(object):
         # 初始化log_text_browser内容为
         self.log_text_browser.append("*" * 20 + " 欢迎使用遥感影像机器学习地物分类工具箱 " + "*" * 20)
         self.log_text_browser.append("*" * 20 + " 当前页面为:随机森林 " + "*" * 20)
+
     def tabWidgetPagesChanged(self, index):
         if index == 0:
             self.log_text_browser.append("*" * 20 + " 当前页面为:随机森林 " + "*" * 20)

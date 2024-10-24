@@ -3,6 +3,8 @@
 # description: 训练模型函数
 from utils import *
 import numpy as np
+
+
 def RF_train(sample_path, SavePath, space, msg, test_size=0.5):
     msg.emit("*" * 30 + " 开始训练 " + "*" * 30)
     msg.emit("模型：RandomForest")
@@ -31,19 +33,19 @@ def RF_train(sample_path, SavePath, space, msg, test_size=0.5):
     msg.emit("*" * 30 + " 获取样本完成 " + "*" * 30)
     msg.emit("*" * 30 + " 分割训练集和验证集 " + "*" * 30)
     # 分割训练集和验证集
-    train_data, test_data, train_label, test_label = Split_train_test_dataset(
-        x, y, val_size=test_size, random_state=42
-    )
+    train_data, test_data, train_label, test_label = Split_train_test_dataset(x, y, val_size=test_size, random_state=42)
     msg.emit("*" * 30 + " 分割完成 " + "*" * 30)
     msg.emit(f"训练集样本数：{train_data.shape[0]}")
     msg.emit(f"验证集样本数：{test_data.shape[0]}")
     msg.emit(f"样本特征数：{train_data.shape[1]}")
     msg.emit(f"类别数：{len(np.unique(train_label))}")
     msg.emit("*" * 30 + " 正在进行超参数优化... " + "*" * 30)
+
     # 超参数优化
     def HyperOptimize(train_data, train_label, test_data, test_label, max_evals=100):
         a = []
         b = []
+
         def hyperopt_train_test(params):
             skf = model_selection.StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
             f1_scores = []
@@ -59,14 +61,17 @@ def RF_train(sample_path, SavePath, space, msg, test_size=0.5):
             a.append(avg_f1)
             b.append(params)
             return -avg_f1  # 注意返回负的 F1 score，因为hyperopt是最小化目标
+
         def f(params):
             acc = hyperopt_train_test(params)
             return {"loss": acc, "status": STATUS_OK}
+
         trials = Trials()
         fmin(f, space, algo=tpe.suggest, max_evals=max_evals, trials=trials, show_progressbar=False)
         max_f1_dict = b[a.index(max(a))]
         msg.emit("最佳超参数：" + str(max_f1_dict))
         return max_f1_dict
+
     # 超参数优化
     max_f1_dict = HyperOptimize(train_data, train_label, test_data, test_label, max_evals=20)
     msg.emit("*" * 30 + " 超参数优化完成 " + "*" * 30)
@@ -104,6 +109,8 @@ def RF_train(sample_path, SavePath, space, msg, test_size=0.5):
     # 保存模型
     SavePickle(classifier, SavePath)
     msg.emit("*" * 5 + f" 训练完成,模型已保存至 {SavePath} " + "*" * 5)
+
+
 def XGB_train(sample_path, SavePath, space, msg, test_size=0.5):
     msg.emit("*" * 30 + " 开始训练 " + "*" * 30)
     msg.emit("模型：XGB_train")
@@ -140,10 +147,12 @@ def XGB_train(sample_path, SavePath, space, msg, test_size=0.5):
     msg.emit(f"样本特征数：{train_data.shape[1]}")
     msg.emit(f"类别数：{len(np.unique(train_label))}")
     msg.emit("*" * 30 + " 正在进行超参数优化... " + "*" * 30)
+
     # 超参数优化
     def HyperOptimize(train_data, train_label, test_data, test_label, max_evals=100):
         a = []
         b = []
+
         def hyperopt_train_test(params):
             skf = model_selection.StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
             f1_scores = []
@@ -159,9 +168,11 @@ def XGB_train(sample_path, SavePath, space, msg, test_size=0.5):
             a.append(avg_f1)
             b.append(params)
             return -avg_f1  # 注意返回负的 F1 score，因为hyperopt是最小化目标
+
         def f(params):
             acc = hyperopt_train_test(params)
             return {"loss": acc, "status": STATUS_OK}
+
         if len(np.unique(train_label)) == 2:
             space["objective"] = "binary:logistic"
             space["eval_metric"] = "logloss"
@@ -174,6 +185,7 @@ def XGB_train(sample_path, SavePath, space, msg, test_size=0.5):
         max_f1_dict = b[a.index(max(a))]
         msg.emit(f"最佳超参数：{max_f1_dict}")
         return max_f1_dict
+
     max_f1_dict = HyperOptimize(train_data, train_label, test_data, test_label)
     # 训练模型
     classifier = xgb.XGBClassifier(**max_f1_dict, random_state=42)
@@ -208,6 +220,8 @@ def XGB_train(sample_path, SavePath, space, msg, test_size=0.5):
     # 保存模型
     SavePickle(classifier, SavePath)
     msg.emit("*" * 5 + f" 训练完成,模型已保存至 {SavePath} " + "*" * 5)
+
+
 def LightGBM_train(
     sample_path,
     SavePath,
@@ -247,10 +261,12 @@ def LightGBM_train(
     msg.emit(f"样本特征数：{train_data.shape[1]}")
     msg.emit(f"类别数：{len(np.unique(train_label))}")
     msg.emit("*" * 30 + " 正在进行超参数优化... " + "*" * 30)
+
     # 定义超参数优化函数
     def HyperOptimize(train_data, train_label, test_data, test_label, max_evals):
         a = []
         b = []
+
         def hyperopt_train_test(params):
             skf = model_selection.StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
             f1_scores = []
@@ -275,9 +291,11 @@ def LightGBM_train(
             a.append(avg_f1)
             b.append(params)
             return -avg_f1  # 注意返回负的 F1 score，因为hyperopt是最小化目标
+
         def f(params):
             acc = hyperopt_train_test(params)
             return {"loss": acc, "status": STATUS_OK}
+
         # 判断任务是否为二分类
         if len(np.unique(train_label)) == 2:
             space["objective"] = "binary"
@@ -292,6 +310,7 @@ def LightGBM_train(
         max_f1_dict = b[a.index(max(a))]
         msg.emit("最佳参数：" + str(max_f1_dict))
         return max_f1_dict
+
     # 超参数优化
     max_f1_dict = HyperOptimize(train_data, train_label, test_data, test_label, max_evals=100)
     msg.emit("*" * 30 + " 超参数优化完成 " + "*" * 30)
