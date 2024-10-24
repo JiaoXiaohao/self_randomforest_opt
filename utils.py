@@ -44,8 +44,8 @@ from matplotlib.colors import ListedColormap
 
 simplefilter(action="ignore", category=FutureWarning)
 plt.style.use(["science", "no-latex"])
-# 设置中文字体
-plt.rcParams["font.sans-serif"] = ["Arial"]
+# 设置中文字体大小
+plt.rcParams["font.size"] = 14
 # 设置负号正常显示
 plt.rcParams["axes.unicode_minus"] = False
 plt.figure()
