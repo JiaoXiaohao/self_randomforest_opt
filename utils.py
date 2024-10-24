@@ -43,9 +43,7 @@ from matplotlib.patches import Patch
 from matplotlib.colors import ListedColormap
 
 simplefilter(action="ignore", category=FutureWarning)
-plt.style.use(["science", "no-latex"])
-# 设置中文字体大小
-plt.rcParams["font.size"] = 14
+plt.style.use(["
 # 设置负号正常显示
 plt.rcParams["axes.unicode_minus"] = False
 plt.figure()
@@ -334,7 +332,7 @@ def plot_learning_curve(estimator, title, X, y, model_name, ylim=None, cv=None, 
     train_scores_std = np.std(train_scores, axis=1)
     test_scores_mean = np.mean(test_scores, axis=1)  # 计算测试集上的平均得分
     test_scores_std = np.std(test_scores, axis=1)  # 计算测试集上的标准差
-    plt.grid()
+    # plt.grid()
     plt.fill_between(
         train_sizes,
         train_scores_mean - train_scores_std,
@@ -364,7 +362,7 @@ def plot_learning_curve(estimator, title, X, y, model_name, ylim=None, cv=None, 
         label="the score on the validation set",
     )
     plt.legend()
-    plt.savefig(f"learning curve of {model_name}.png", dpi=800)
+    plt.savefig(f"learning curve of {model_name}.png", dpi=500)
     # 清除图像
     plt.clf()
     # plt.savefig("学习曲线_XBM.png", dpi=800)
@@ -410,8 +408,8 @@ def PlotImportance_RF(importances):
     plt.xlim([-1, len(indices)])
     plt.xlabel("Feature")
     plt.ylabel("Importance")
-    plt.savefig("Feature importances by RandomTreeClassifier.png", dpi=500)
-    # 清楚图像
+    plt.savefig("Feature importances by RandomTreeClassifier.png", dpi=300)
+    # 清除图像
     plt.clf()
     # plt.show()
 
