@@ -4,7 +4,56 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from classes import *
 
 
-class ClassificationUI(object):
+class ClassificationUI(QtWidgets.QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(1300, 910)
+        # 固定窗口大小
+        # MainWindow.setFixedSize(1300, 910)
+        self.centralWidget = QtWidgets.QWidget(MainWindow)
+        self.centralWidget.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.centralWidget.setObjectName("centralWidget")
+        self.tabWidgetPages = QtWidgets.QTabWidget(self.centralWidget)
+        self.tabWidgetPages.setGeometry(QtCore.QRect(20, 10, 480, 890))
+        self.tabWidgetPages.setObjectName("tabWidgetPages")
+        # RF_tab_page
+        self.RF_tab_page = QtWidgets.QWidget()
+        self.RF_tab_page.setObjectName("RF_tab_page")
+        self.RF_tab_page_init()
+        self.tabWidgetPages.addTab(self.RF_tab_page, "")
+        # LGBM_tab_page
+        self.LGB_tab_page = QtWidgets.QWidget()
+        self.LGB_tab_page.setObjectName("LGB_tab_page")
+        self.LightGBM_tab_page_init()
+        self.tabWidgetPages.addTab(self.LGB_tab_page, "")
+        #### ======================================== ========================================
+        # XGB_tab_page
+        self.XGB_tab_page = QtWidgets.QWidget()
+        self.XGB_tab_page.setObjectName("XGB_tab_page")
+        self.XGB_tab_page_init()
+        self.tabWidgetPages.addTab(self.XGB_tab_page, "")
+        # 设置日志界面
+        self.log_group = QtWidgets.QGroupBox(self.centralWidget)
+        self.log_group.setGeometry(QtCore.QRect(530, 10, 750, 890))
+        self.log_group.setObjectName("log_group")
+        self.log_text_browser = QtWidgets.QTextBrowser(self.log_group)
+        self.log_text_browser.setGeometry(QtCore.QRect(10, 20, 730, 830))
+        self.log_text_browser.setObjectName("log_text_browser")
+        self.SaveLogButton = QtWidgets.QPushButton(self.log_group)
+        self.SaveLogButton.setGeometry(QtCore.QRect(330, 855, 90, 30))
+        self.SaveLogButton.setObjectName("SaveLogButton")
+        self.SaveLogButton.clicked.connect(self.SaveLogButton_clicked)
+        MainWindow.setCentralWidget(self.centralWidget)
+        # 绑定tabWidgetPagesChanged
+        self.tabWidgetPages.setCurrentIndex(0)
+        self.tabWidgetPages.currentChanged.connect(self.tabWidgetPagesChanged)
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
     def ThreadLog(self, msg):
         self.log_text_browser.append(msg)
 
@@ -517,51 +566,6 @@ class ClassificationUI(object):
         self.predictThread.error.connect(self.ThreadLog)
         self.predictThread.msg.connect(self.ThreadLog)
         self.predictThread.start()
-
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1300, 910)
-        # 固定窗口大小
-        # MainWindow.setFixedSize(1300, 910)
-        self.centralWidget = QtWidgets.QWidget(MainWindow)
-        self.centralWidget.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.centralWidget.setObjectName("centralWidget")
-        self.tabWidgetPages = QtWidgets.QTabWidget(self.centralWidget)
-        self.tabWidgetPages.setGeometry(QtCore.QRect(20, 10, 480, 890))
-        self.tabWidgetPages.setObjectName("tabWidgetPages")
-        # RF_tab_page
-        self.RF_tab_page = QtWidgets.QWidget()
-        self.RF_tab_page.setObjectName("RF_tab_page")
-        self.RF_tab_page_init()
-        self.tabWidgetPages.addTab(self.RF_tab_page, "")
-        # LGBM_tab_page
-        self.LGB_tab_page = QtWidgets.QWidget()
-        self.LGB_tab_page.setObjectName("LGB_tab_page")
-        self.LightGBM_tab_page_init()
-        self.tabWidgetPages.addTab(self.LGB_tab_page, "")
-        #### ======================================== ========================================
-        # XGB_tab_page
-        self.XGB_tab_page = QtWidgets.QWidget()
-        self.XGB_tab_page.setObjectName("XGB_tab_page")
-        self.XGB_tab_page_init()
-        self.tabWidgetPages.addTab(self.XGB_tab_page, "")
-        # 设置日志界面
-        self.log_group = QtWidgets.QGroupBox(self.centralWidget)
-        self.log_group.setGeometry(QtCore.QRect(530, 10, 750, 890))
-        self.log_group.setObjectName("log_group")
-        self.log_text_browser = QtWidgets.QTextBrowser(self.log_group)
-        self.log_text_browser.setGeometry(QtCore.QRect(10, 20, 730, 830))
-        self.log_text_browser.setObjectName("log_text_browser")
-        self.SaveLogButton = QtWidgets.QPushButton(self.log_group)
-        self.SaveLogButton.setGeometry(QtCore.QRect(330, 855, 90, 30))
-        self.SaveLogButton.setObjectName("SaveLogButton")
-        self.SaveLogButton.clicked.connect(self.SaveLogButton_clicked)
-        MainWindow.setCentralWidget(self.centralWidget)
-        # 绑定tabWidgetPagesChanged
-        self.tabWidgetPages.setCurrentIndex(0)
-        self.tabWidgetPages.currentChanged.connect(self.tabWidgetPagesChanged)
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def RF_tab_page_init(self):
         # ======================================== RF_get_samples_group ========================================

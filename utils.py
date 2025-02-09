@@ -43,7 +43,7 @@ from matplotlib.patches import Patch
 from matplotlib.colors import ListedColormap
 
 simplefilter(action="ignore", category=FutureWarning)
-plt.style.use(["
+plt.style.use(["science", "ieee"])
 # 设置负号正常显示
 plt.rcParams["axes.unicode_minus"] = False
 plt.figure()

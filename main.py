@@ -6,8 +6,7 @@ import os
 
 if __name__ == "__main__":
     try:
-        from PyQt5 import QtCore, QtGui, QtWidgets
-        from __UI__ import ClassificationUI
+        from __UI__ import *
     except ImportError:
         # 读取requirements.txt
         with open("requirements.txt", "r") as f:
@@ -18,8 +17,7 @@ if __name__ == "__main__":
                 f"pip install {requirement} -i http://mirrors.aliyun.com/pypi/simple --trusted-host mirrors.aliyun.com"
             )
         # 重新导入
-        from PyQt5 import QtCore, QtGui, QtWidgets
-        from __UI__ import ClassificationUI
+        from __UI__ import *
     try:
         app = QtWidgets.QApplication(sys.argv)
         MainWindow = QtWidgets.QMainWindow()
